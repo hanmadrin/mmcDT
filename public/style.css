@@ -89,12 +89,22 @@
 
 /* show data page */
 .show-data-page {
-    max-width: 500px;
     margin: 0 auto;
-    padding: 100px 0;
 }
 
 .show-data-page-title {
     font-size: 30px;
     margin-bottom: 30px;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.show-pdf-file,
+.show-data {
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
 }

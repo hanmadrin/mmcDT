@@ -5,6 +5,7 @@ const app = express();
 const { pdfToText } = require('./utilities/pdfToText');
 const { deleteFile } = require('./utilities/deleteFile');
 const ExpressError = require('./utilities/expressError');
+const { renameFile } = require('./utilities/renameFile');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
@@ -20,13 +21,16 @@ app.use(formidableMiddleware({
 
 app.post('/api/parse-pdf', async (req, res, next) => {
     try {
-        console.log("req.body");
         const response = await pdfToText(req.files.pdf.path);
         if (response.error) {
             throw new ExpressError(400, response.error);
         }
-        deleteFile(req.files.pdf.path);
-        res.json(response);
+        // deleteFile(req.files.pdf.path);
+        renameFile(req.files.pdf.path, `./${req.files.pdf.path}.pdf`);
+        res.json({
+            file: `${req.files.pdf.path.replace('public/', '')}.pdf`,
+            response
+        });
     } catch (err) {
         next(err);
     }
