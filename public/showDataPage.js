@@ -1,6 +1,4 @@
 const showDataPage = (data) => {
-    console.log(data);
-    console.log(data.response.header['Invoice Number']);
     const body = document.querySelector('body');
     const showDataPage = document.createElement('div');
     showDataPage.classList.add('show-data-page');
