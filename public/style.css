@@ -51,17 +51,20 @@
     margin: 0 auto;
     padding: 100px 0;
 }
-.upload-pdf-form{
+
+.upload-pdf-form {
     background: #fff;
     padding: 30px 30px 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
-.upload-pdf-form-title{
+
+.upload-pdf-form-title {
     font-size: 30px;
     margin-bottom: 30px;
 }
-.upload-pdf-form-input{
+
+.upload-pdf-form-input {
     width: 100%;
     height: 40px;
     margin-bottom: 20px;
@@ -70,7 +73,8 @@
     border-radius: 5px;
     font-size: 16px;
 }
-.upload-pdf-form-button{
+
+.upload-pdf-form-button {
     width: 100%;
     height: 40px;
     border: 1px solid #333;
@@ -81,4 +85,16 @@
     color: #fff;
     cursor: pointer;
     margin-bottom: 20px;
+}
+
+/* show data page */
+.show-data-page {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 100px 0;
+}
+
+.show-data-page-title {
+    font-size: 30px;
+    margin-bottom: 30px;
 }

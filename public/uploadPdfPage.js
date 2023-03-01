@@ -1,3 +1,5 @@
+import showDataPage from './showDataPage.js';
+
 const uploadPdfPage = () => {
     console.log('uploadPdfPage');
     const body = document.querySelector('body');
@@ -15,23 +17,17 @@ const uploadPdfPage = () => {
     const uploadPdfFormButton = document.createElement('button');
     uploadPdfFormButton.classList.add('upload-pdf-form-button');
     uploadPdfFormButton.setAttribute('type', 'button');
-    const verifyUploadPdf = () => {
+    const verifyUploadPdf = async () => {
         console.log("verifyUploadPdf");
         const formData = new FormData();
         formData.append('pdf', uploadPdfFormInput.files[0]);
-        fetch('/api/parse-pdf', {
+        const response = await fetch('/api/parse-pdf', {
             method: 'POST',
-            headers: {
-                // 'content-type': 'multipart/form-data'
-            },
             body: formData
-        }).then((response) => {
-            return response.json();
-        }).then((data) => {
-            console.log(data);
-        }).catch((error) => {
-            console.log(error);
         });
+        const data = await response.json();
+        body.removeChild(uploadPdfPage);
+        showDataPage(data);
     }
     uploadPdfFormButton.addEventListener('click', verifyUploadPdf);
     uploadPdfFormButton.innerText = 'Upload';
