@@ -20,8 +20,6 @@ const loginPage = () => {
     loginFormButton.classList.add('login-form-button');
     loginFormButton.setAttribute('type', 'button');
     const verifyLogin = () => {
-        console.log(loginFormInput.value);
-        console.log(loginFormPassword.value);
         body.removeChild(loginPage);
         uploadPdfPage();        
     };

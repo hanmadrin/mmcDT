@@ -1,7 +1,6 @@
 import showDataPage from './showDataPage.js';
 
 const uploadPdfPage = () => {
-    console.log('uploadPdfPage');
     const body = document.querySelector('body');
     const uploadPdfPage = document.createElement('div');
     uploadPdfPage.classList.add('upload-pdf-page');
@@ -18,7 +17,6 @@ const uploadPdfPage = () => {
     uploadPdfFormButton.classList.add('upload-pdf-form-button');
     uploadPdfFormButton.setAttribute('type', 'button');
     const verifyUploadPdf = async () => {
-        console.log("verifyUploadPdf");
         const formData = new FormData();
         formData.append('pdf', uploadPdfFormInput.files[0]);
         const response = await fetch('/api/parse-pdf', {
