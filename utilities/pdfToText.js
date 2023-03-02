@@ -44,7 +44,8 @@ module.exports.pdfToText = async (pdfPath) => {
         const data = await pdf(dataBuffer, options);
 
 
-        const fileData = data.text;
+        let fileData = data.text;
+        fileData = fileData.replace(/(\d{1,2}\/\d{1,2}\/\d{4}\s\d{1,2}:\d{1,2}:\d{1,2}\s[A|P]M)@@@Page\s\d{1,2}\n\n\nMATTHEWS MOTOR COMPANY\n/g,'');
         const header = (() => {
             const headerContentStructure = [
                 {
