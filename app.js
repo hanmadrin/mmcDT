@@ -6,6 +6,7 @@ const { pdfToText } = require('./utilities/pdfToText');
 const { deleteFile } = require('./utilities/deleteFile');
 const ExpressError = require('./utilities/expressError');
 const { renameFile } = require('./utilities/renameFile');
+const fs = require('fs');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
@@ -20,6 +21,10 @@ app.use(formidableMiddleware({
 }));
 
 app.post('/api/parse-pdf', async (req, res, next) => {
+    // create uploads folder if it doesn't exist
+    if (!fs.existsSync('./public/uploads')) {
+        fs.mkdirSync('./public/uploads');
+    }
     try {
         const response = await pdfToText(req.files.pdf.path);
         if (response.error) {
