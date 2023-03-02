@@ -136,9 +136,6 @@
     font-size: 16px;
 }
 
-.table-second-header {
-    text-align: right;
-}
 
 table {
     width: 100%;
@@ -146,11 +143,9 @@ table {
 
 th,
 td {
-    padding: 5px;
-}
-
-.text-right {
-    text-align: right;
+    padding: 3px 2px;
+    text-align: left;
+    font-size: 14px;
 }
 
 .table-border-bottom {
@@ -161,8 +156,50 @@ td {
     font-weight: bold;
 }
 
-.border-bottom{
+.border-bottom {
     border-bottom: 1px solid #ddd;
     background-color: #5963c17c;
     color: #181b34;
+}
+
+.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    margin-left: 80%;
+    font-size: 20px;
+}
+
+.back-button {
+    background: rgb(253, 63, 63);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 20px;
+    display: inline-block;
+    border: none;
+    margin-right: 10px;
+}
+.back-button:hover {
+    background: rgb(255, 0, 0);
+    cursor: pointer;
+}
+
+.confirm-button {
+    background: rgb(55, 210, 55);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 20px;
+    display: inline-block;
+    border: none;
+}
+
+.confirm-button:hover {
+    background: rgb(0, 117, 0);
+    cursor: pointer;
 }
