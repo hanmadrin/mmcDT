@@ -13,9 +13,8 @@ const uploadPdfPage = () => {
     uploadPdfFormInput.classList.add('upload-pdf-form-input');
     uploadPdfFormInput.setAttribute('type', 'file');
     uploadPdfFormInput.setAttribute('accept', '.pdf');
-    const uploadPdfFormButton = document.createElement('button');
-    uploadPdfFormButton.classList.add('upload-pdf-form-button');
-    uploadPdfFormButton.setAttribute('type', 'button');
+    uploadPdfFormInput.setAttribute('id', 'upload');
+    uploadPdfFormInput.setAttribute('hidden', 'true');
     const verifyUploadPdf = async () => {
         const formData = new FormData();
         formData.append('pdf', uploadPdfFormInput.files[0]);
@@ -27,11 +26,28 @@ const uploadPdfPage = () => {
         body.removeChild(uploadPdfPage);
         showDataPage(data);
     }
-    uploadPdfFormButton.addEventListener('click', verifyUploadPdf);
-    uploadPdfFormButton.innerText = 'Upload';
+    const uploadIcon = document.createElement('label');
+    uploadIcon.classList.add('upload-label');
+    uploadIcon.setAttribute('for', 'upload');
+    uploadIcon.innerHTML = `
+        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+                <path d="M512 256l144.8 144.8-36.2 36.2-83-83v311.6h-51.2V354l-83 83-36.2-36.2L512 256zM307.2 716.8V768h409.6v-51.2H307.2z" fill="#000000" fill-rule="evenodd">
+                </path>
+            </g>
+        </svg>
+    `;
+    const svg = uploadIcon.querySelector('svg');
+    svg.classList.add('upload-icon');
+    const uploadText = document.createElement('span');
+    uploadText.innerText = 'Upload PDF';
+    uploadIcon.appendChild(uploadText);
+    uploadPdfFormInput.addEventListener('change', verifyUploadPdf);
     uploadPdfForm.appendChild(uploadPdfFormTitle);
     uploadPdfForm.appendChild(uploadPdfFormInput);
-    uploadPdfForm.appendChild(uploadPdfFormButton);
+    uploadPdfForm.appendChild(uploadIcon);
     uploadPdfPage.appendChild(uploadPdfForm);
     body.appendChild(uploadPdfPage);
 };
