@@ -19,9 +19,28 @@ const loginPage = () => {
     const loginFormButton = document.createElement('button');
     loginFormButton.classList.add('login-form-button');
     loginFormButton.setAttribute('type', 'button');
-    const verifyLogin = () => {
+    const verifyLogin = async () => {
+        const username = loginFormInput.value;
+        const password = loginFormPassword.value;
+        if (!username || !password) {
+            alert('Username and password are required');
+            return;
+        }
+        const response = await fetch('/api/users/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+        const data = await response.json();
+        if (response.status !== 200) {
+            alert(data);
+            return;
+        }
+        localStorage.setItem('currentPage', '1');
         body.removeChild(loginPage);
-        uploadPdfPage();        
+        uploadPdfPage();
     };
     loginFormButton.addEventListener('click', verifyLogin);
     loginFormButton.innerText = 'Login';

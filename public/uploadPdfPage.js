@@ -1,4 +1,5 @@
 import showDataPage from './showDataPage.js';
+import loginPage from './loginPage.js';
 
 const uploadPdfPage = () => {
     const body = document.querySelector('body');
@@ -18,11 +19,19 @@ const uploadPdfPage = () => {
     const verifyUploadPdf = async () => {
         const formData = new FormData();
         formData.append('pdf', uploadPdfFormInput.files[0]);
-        const response = await fetch('/api/parse-pdf', {
+        const response = await fetch('/api/datas/parse-pdf', {
             method: 'POST',
             body: formData
         });
         const data = await response.json();
+        if (response.status === 401) {
+            localStorage.setItem('currentPage', '0');
+            body.removeChild(uploadPdfPage);
+            loginPage();
+        } else if (response.status !== 200) {
+            alert(data);
+            return;
+        }
         body.removeChild(uploadPdfPage);
         showDataPage(data);
     }
