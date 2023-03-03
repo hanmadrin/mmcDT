@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const formidableMiddleware = require('express-formidable');
 const app = express();
+const multer = require('multer')
 const { pdfToText } = require('./utilities/pdfToText');
 const { deleteFile } = require('./utilities/deleteFile');
 const ExpressError = require('./utilities/expressError');
@@ -9,6 +9,7 @@ const { renameFile } = require('./utilities/renameFile');
 const fs = require('fs');
 const { connectToDatabase } = require('./config/config');
 require('dotenv').config();
+const upload = multer({ dest: 'public/uploads/' })
 
 const userRouter = require('./routes/userRoute');
 
@@ -18,31 +19,23 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
-app.use(formidableMiddleware({
-    uploadDir: './public/uploads',
-}));
-
-app.use((req, res, next) => {
-    console.log(req);
-    next();
-});
 
 app.use('/api/users', userRouter);
 
-app.post('/api/parse-pdf', async (req, res, next) => {
+app.post('/api/parse-pdf', upload.single('pdf'), async (req, res, next) => {
     // create uploads folder if it doesn't exist
     if (!fs.existsSync('./public/uploads')) {
         fs.mkdirSync('./public/uploads');
     }
     try {
-        const response = await pdfToText(req.files.pdf.path);
+        const response = await pdfToText(req.file.path);
         if (response.error) {
             throw new ExpressError(400, response.error);
         }
         // deleteFile(req.files.pdf.path);
-        renameFile(req.files.pdf.path, `./${req.files.pdf.path}.pdf`);
+        renameFile(`./${req.file.path}`, `./${req.file.path}.pdf`);
         res.json({
-            file: `${req.files.pdf.path.replace('public/', '')}.pdf`,
+            file: `${req.file.path.replace('public/', '')}.pdf`,
             response
         });
     } catch (err) {
