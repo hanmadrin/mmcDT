@@ -1,6 +1,7 @@
 import uploadPdfPage from './uploadPdfPage.js';
+import { notify} from './library.js';
 const loginPage = () => {
-    const body = document.querySelector('body');
+    const body = document.querySelector('#main');
     const loginPage = document.createElement('div');
     loginPage.classList.add('login-page');
     const loginForm = document.createElement('form');
@@ -23,7 +24,7 @@ const loginPage = () => {
         const username = loginFormInput.value;
         const password = loginFormPassword.value;
         if (!username || !password) {
-            alert('Username and password are required');
+            notify({ data: 'Username and password are required', type: 'danger'});
             return;
         }
         const response = await fetch('/api/users/login', {
@@ -35,7 +36,7 @@ const loginPage = () => {
         });
         const data = await response.json();
         if (response.status !== 200) {
-            alert(data);
+            notify({ data, type: 'danger'});
             return;
         }
         localStorage.setItem('currentPage', '1');

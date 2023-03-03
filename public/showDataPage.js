@@ -1,6 +1,7 @@
+import { notify } from "./library.js";
 import uploadPdfPage from "./uploadPdfPage.js";
 const showDataPage = (data) => {
-    const body = document.querySelector('body');
+    const body = document.querySelector('#main');
     const showDataPage = document.createElement('div');
     showDataPage.classList.add('show-data-page');
     const showDataContent = document.createElement('div');
@@ -18,6 +19,24 @@ const showDataPage = (data) => {
     const confirmButton = document.createElement('button');
     confirmButton.classList.add('confirm-button');
     confirmButton.innerText = 'Confirm';
+    const confirmData = async () => {
+        const response = await fetch('/api/datas/save-pdf-data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data.response)
+        });
+        const responseData = await response.json();
+        if (response.status !== 200) {
+            notify({ data: responseData, type: 'danger' })
+            return;
+        }
+        notify({ data: 'Uploaded successfully', type: 'success' });
+        body.removeChild(showDataPage);
+        uploadPdfPage();
+    };
+    confirmButton.addEventListener('click', confirmData);
     buttonDiv.appendChild(backButton);
     buttonDiv.appendChild(confirmButton);
     //header

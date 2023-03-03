@@ -1,38 +1,29 @@
 const { sequelize } = require("../config/config");
 const { DataTypes } = require("sequelize");
 
-const Data = sequelize.define(
-    "Data",
+const File = sequelize.define(
+    "File",
     {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
-        header: {
-            type: DataTypes.STRING(1000),
+        file_name:{
+            type: DataTypes.STRING,
             allowNull: false,
         },
-        body: {
-            type: DataTypes.STRING(5000),
+        time_string:{
+            type: DataTypes.STRING,
             allowNull: false,
         },
-        footer: {
-            type: DataTypes.STRING(1000),
-            allowNull: false,
-        },
-        status: {
-            type: DataTypes.STRING(10),
-            allowNull: true,
-            defaultValue: null,
-        },
-        file_id: {
+        user_id:{
             type: DataTypes.INTEGER,
             allowNull: false,
         }
     },
     {
-        tableName: "datas",
+        tableName: "files",
         timestamps: false,
         createdAt: false,
         updatedAt: false,
@@ -40,4 +31,4 @@ const Data = sequelize.define(
 
 );
 
-module.exports = Data;
+module.exports = File;

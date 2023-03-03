@@ -8,6 +8,7 @@ require('dotenv').config();
 
 const userRouter = require('./routes/userRoute');
 const dataRouter = require('./routes/dataRoute');
+const extensionRouter = require('./routes/extensionRoute');
 
 const port = process.env.PORT || 3000;
 
@@ -19,6 +20,7 @@ app.use(express.static('public'));
 
 app.use('/api/users', userRouter);
 app.use('/api/datas', dataRouter);
+app.use('/api/extensions', extensionRouter);
 
 app.use("/api/*", (req, res, next) => {
     next(new ExpressError(404, "Page not found"));
