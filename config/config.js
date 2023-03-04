@@ -4,10 +4,12 @@ require("dotenv").config();
 const database = process.env.MYSQL_DATABASE;
 const username = process.env.MYSQL_USERNAME;
 const password = process.env.MYSQL_PASSWORD;
+const stage = process.env.STAGE;
 
 const sequelize = new Sequelize(database, username, password, {
   host: "localhost",
   dialect: "mysql",
+  logging: stage === "dev" ? console.log : false,
 });
 
 module.exports.connectToDatabase = async () => {

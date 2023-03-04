@@ -1,6 +1,24 @@
 import showDataPage from './showDataPage.js';
+import loginPage from './loginPage.js';
+import { notify,popup,confirmationPopup } from './library.js';
 
 const uploadPdfPage = () => {
+    popup({
+       state: true,
+       content: confirmationPopup({
+        title: 'Upload PDF',
+        message: 'Upload a PDF file to parse data from it',
+        callback: ()=>{
+            console.log('ashik lol')
+            popup({state:false});
+        },
+       }),
+       options:{
+        backDrop: true,
+        removeButton: true,
+        backDropColor: 'rgba(0,0,0,0.75)',
+       }
+    })
     const body = document.querySelector('body');
     const uploadPdfPage = document.createElement('div');
     uploadPdfPage.classList.add('upload-pdf-page');
@@ -18,11 +36,19 @@ const uploadPdfPage = () => {
     const verifyUploadPdf = async () => {
         const formData = new FormData();
         formData.append('pdf', uploadPdfFormInput.files[0]);
-        const response = await fetch('/api/parse-pdf', {
+        const response = await fetch('/api/datas/parse-pdf', {
             method: 'POST',
             body: formData
         });
         const data = await response.json();
+        if (response.status === 401) {
+            localStorage.setItem('currentPage', '0');
+            body.removeChild(uploadPdfPage);
+            loginPage();
+        } else if (response.status !== 200) {
+            notify({ data, type: 'danger' })
+            return;
+        }
         body.removeChild(uploadPdfPage);
         showDataPage(data);
     }

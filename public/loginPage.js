@@ -1,6 +1,7 @@
 import uploadPdfPage from './uploadPdfPage.js';
+import { notify} from './library.js';
 const loginPage = () => {
-    const body = document.querySelector('body');
+    const body = document.querySelector('#main');
     const loginPage = document.createElement('div');
     loginPage.classList.add('login-page');
     const loginForm = document.createElement('form');
@@ -19,9 +20,28 @@ const loginPage = () => {
     const loginFormButton = document.createElement('button');
     loginFormButton.classList.add('login-form-button');
     loginFormButton.setAttribute('type', 'button');
-    const verifyLogin = () => {
+    const verifyLogin = async () => {
+        const username = loginFormInput.value;
+        const password = loginFormPassword.value;
+        if (!username || !password) {
+            notify({ data: 'Username and password are required', type: 'danger'});
+            return;
+        }
+        const response = await fetch('/api/users/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+        const data = await response.json();
+        if (response.status !== 200) {
+            notify({ data, type: 'danger'});
+            return;
+        }
+        localStorage.setItem('currentPage', '1');
         body.removeChild(loginPage);
-        uploadPdfPage();        
+        uploadPdfPage();
     };
     loginFormButton.addEventListener('click', verifyLogin);
     loginFormButton.innerText = 'Login';
