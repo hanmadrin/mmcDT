@@ -1,4 +1,4 @@
-import { notify } from "./library.js";
+import { loaderCircle, notify, popup } from "./library.js";
 import loginPage from "./loginPage.js";
 import uploadPdfPage from "./uploadPdfPage.js";
 const showDataPage = (data) => {
@@ -35,6 +35,13 @@ const showDataPage = (data) => {
     confirmButton.classList.add('confirm-button');
     confirmButton.innerText = 'Confirm';
     const confirmData = async () => {
+        popup({
+            state: true,
+            content: loaderCircle({size: '50'}),
+            options:{
+                removeButton: false,
+            }
+        });
         const response = await fetch('/api/datas/save-pdf-data', {
             method: 'POST',
             headers: {
@@ -43,6 +50,7 @@ const showDataPage = (data) => {
             body: JSON.stringify(data.response)
         });
         const responseData = await response.json();
+        popup({ state: false });
         if (response.status !== 200) {
             notify({ data: responseData, type: 'danger' })
             return;
