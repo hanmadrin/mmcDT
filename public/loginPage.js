@@ -21,6 +21,12 @@ const loginPage = () => {
     loginFormButton.classList.add('login-form-button');
     loginFormButton.setAttribute('type', 'button');
     const verifyLogin = async () => {
+        const username = loginFormInput.value;
+        const password = loginFormPassword.value;
+        if (!username || !password) {
+            notify({ data: 'Username and password are required', type: 'danger' });
+            return;
+        }
         popup({
             state: true,
             content: loaderCircle({ size: '50' }),
@@ -28,12 +34,6 @@ const loginPage = () => {
                 removeButton: false,
             }
         });
-        const username = loginFormInput.value;
-        const password = loginFormPassword.value;
-        if (!username || !password) {
-            notify({ data: 'Username and password are required', type: 'danger' });
-            return;
-        }
         try {
             const response = await fetch('/api/users/login', {
                 method: 'POST',

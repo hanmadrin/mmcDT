@@ -3,7 +3,7 @@ const { File, User, Data } = require('../models');
 const ExpressError = require('../utilities/expressError');
 const { pdfToText } = require('../utilities/pdfToText');
 const { renameFile } = require('../utilities/renameFile');
-
+const {deleteFile} = require('../utilities/deleteFile');
 module.exports.isPdfExists = async (req, res, next) => {
     try {
         const { fileName } = req.params;
@@ -35,12 +35,13 @@ module.exports.parsePdf = async (req, res, next) => {
         if (response.error)
             throw new ExpressError(400, response.error);
 
-        renameFile(`./${req.file.path}`, `./${req.file.path}.pdf`);
+        // renameFile(`./${req.file.path}`, `./${req.file.path}.pdf`);
 
         response.originalName = req.file.originalname;
-
+        // delete file
+        deleteFile(`./${req.file.path}`);
         res.json({
-            file: `${req.file.path.replace('public/', '')}.pdf`,
+            // file: `${req.file.path.replace('public/', '')}.pdf`,
             response
         });
     } catch (err) {
