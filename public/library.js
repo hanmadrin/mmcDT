@@ -56,6 +56,18 @@ const crossButton = ({ size = 30, options = { color: 'white' } }) => {
     crossButton.append(designCross);
     return crossButton;
 }
+const loaderCircle = ({size=30})=>{
+    const loaderCircle = document.createElement('div');
+    loaderCircle.classList = 'loader-circle';
+    loaderCircle.style.height = `${size}px`;
+    loaderCircle.style.width = `${size}px`;
+    loaderCircle.style.borderRadius = `${size}px`;
+    loaderCircle.style.borderTop = `${size/7.5}px solid blue`;
+    loaderCircle.style.borderRight = `${size/7.5}px solid green`;
+    loaderCircle.style.borderBottom = `${size/7.5}px solid red`;
+    loaderCircle.style.borderLeft = `${size/7.5}px solid pink`;
+    return loaderCircle;
+}
 const confirmationPopup = ({ title, message, callback, negativeCallBack }) => {
     const content = document.createElement('div');
     content.classList = 'h-300px d-flex flex-column justify-content-evenly align-items-center bg-dark border-radius-10px px-20px';
@@ -116,4 +128,4 @@ const popup = ({ state, content, options = { backDrop: true, removeButton: true,
         }
     }
 }
-export { groundSetup, notify, popup, sleep, confirmationPopup };
+export { groundSetup, notify, popup, sleep, confirmationPopup,loaderCircle};

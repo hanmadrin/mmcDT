@@ -1,5 +1,5 @@
 import uploadPdfPage from './uploadPdfPage.js';
-import { notify} from './library.js';
+import { notify, popup, loaderCircle } from './library.js';
 const loginPage = () => {
     const body = document.querySelector('#main');
     const loginPage = document.createElement('div');
@@ -21,29 +21,47 @@ const loginPage = () => {
     loginFormButton.classList.add('login-form-button');
     loginFormButton.setAttribute('type', 'button');
     const verifyLogin = async () => {
+        popup({
+            state: true,
+            content: loaderCircle({ size: '50' }),
+            options: {
+                removeButton: false,
+            }
+        });
         const username = loginFormInput.value;
         const password = loginFormPassword.value;
         if (!username || !password) {
-            notify({ data: 'Username and password are required', type: 'danger'});
+            notify({ data: 'Username and password are required', type: 'danger' });
             return;
         }
-        const response = await fetch('/api/users/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
-        });
-        const data = await response.json();
-        if (response.status !== 200) {
-            notify({ data, type: 'danger'});
-            return;
+        try {
+            const response = await fetch('/api/users/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+            const data = await response.json();
+            if (response.status !== 200) {
+                notify({ data, type: 'danger' });
+                return;
+            }
+            localStorage.setItem('currentPage', '1');
+            body.removeChild(loginPage);
+            uploadPdfPage();
+        } catch (err) {
+            notify({ data: 'Something went wrong', type: 'danger' });
+        } finally {
+            popup({ state: false });
         }
-        localStorage.setItem('currentPage', '1');
-        body.removeChild(loginPage);
-        uploadPdfPage();
     };
     loginFormButton.addEventListener('click', verifyLogin);
+    loginFormPassword.addEventListener('keypress', async (e) => {
+        if (e.key === 'Enter') {
+            await verifyLogin();
+        }
+    });
     loginFormButton.innerText = 'Login';
     loginForm.appendChild(loginFormTitle);
     loginForm.appendChild(loginFormInput);

@@ -25,3 +25,12 @@ module.exports.login = async (req, res, next) => {
         next(err);
     }
 };
+
+module.exports.logout = async (req, res, next) => {
+    try {
+        res.clearCookie('username');
+        res.json({ message: "Logged out" });
+    } catch (err) {
+        next(err);
+    }
+};

@@ -1,11 +1,25 @@
 import showDataPage from './showDataPage.js';
 import loginPage from './loginPage.js';
-import { notify, popup, confirmationPopup } from './library.js';
+import { notify, popup, confirmationPopup, loaderCircle } from './library.js';
 
 const uploadPdfPage = () => {
     const body = document.querySelector('body');
     const uploadPdfPage = document.createElement('div');
     uploadPdfPage.classList.add('upload-pdf-page');
+    const logoutButton = document.createElement('button');
+    logoutButton.classList.add('logout-button');
+    logoutButton.innerText = 'Logout';
+    const logout = async () => {
+        const response = await fetch('/api/users/logout', {
+            method: 'GET',
+        });
+        const data = await response.json();
+        notify({ data: data.message, type: 'success' });
+        localStorage.setItem('currentPage', '0');
+        body.removeChild(uploadPdfPage);
+        loginPage();
+    };
+    logoutButton.addEventListener('click', logout);
     const uploadPdfForm = document.createElement('form');
     uploadPdfForm.classList.add('upload-pdf-form');
     const uploadPdfFormTitle = document.createElement('h1');
@@ -20,63 +34,102 @@ const uploadPdfPage = () => {
     const verifyUploadPdf = async () => {
         const formData = new FormData();
         formData.append('pdf', uploadPdfFormInput.files[0]);
-        const responseData = await fetch(`/api/datas/is-pdf-exists/${uploadPdfFormInput.files[0].name}`, {
-            method: 'GET',
-        });
-        const jsonData = await responseData.json();
-        if (jsonData.isPdfExists) {
+        try {
             popup({
                 state: true,
-                content: confirmationPopup({
-                    title: 'This PDF is already uploaded',
-                    message: 'Do you want to upload it again?',
-                    callback: async () => {
-                        popup({ state: false });
-                        const response = await fetch('/api/datas/parse-pdf', {
-                            method: 'POST',
-                            body: formData
-                        });
-                        const data = await response.json();
-                        if (response.status === 401) {
-                            localStorage.setItem('currentPage', '0');
-                            body.removeChild(uploadPdfPage);
-                            loginPage();
-                        } else if (response.status !== 200) {
-                            notify({ data, type: 'danger' })
-                            return;
-                        }
-                        body.removeChild(uploadPdfPage);
-                        showDataPage(data);
-                    },
-                    negativeCallBack: async () => {
-                        popup({ state: false });
-                        uploadPdfFormInput.value = '';
-                    }
-                }),
+                content: loaderCircle({ size: '50' }),
                 options: {
-                    backDrop: false,
                     removeButton: false,
-                    backDropColor: 'rgba(0,0,0,0.75)',
                 }
             });
-        } else {
-            const response = await fetch('/api/datas/parse-pdf', {
-                method: 'POST',
-                body: formData
+            const responseData = await fetch(`/api/datas/is-pdf-exists/${uploadPdfFormInput.files[0].name}`, {
+                method: 'GET',
             });
-            const data = await response.json();
-            if (response.status === 401) {
-                localStorage.setItem('currentPage', '0');
-                body.removeChild(uploadPdfPage);
-                loginPage();
-            } else if (response.status !== 200) {
-                notify({ data, type: 'danger' })
-                return;
+            const jsonData = await responseData.json();
+            popup({ state: false });
+            if (jsonData.isPdfExists) {
+                popup({
+                    state: true,
+                    content: confirmationPopup({
+                        title: 'This PDF is already uploaded',
+                        message: 'Do you want to upload it again?',
+                        callback: async () => {
+                            popup({ state: false });
+                            popup({
+                                state: true,
+                                content: loaderCircle({ size: '50' }),
+                                options: {
+                                    removeButton: false,
+                                }
+                            });
+                            try {
+                                const response = await fetch('/api/datas/parse-pdf', {
+                                    method: 'POST',
+                                    body: formData
+                                });
+                                const data = await response.json();
+                                if (response.status === 401) {
+                                    localStorage.setItem('currentPage', '0');
+                                    body.removeChild(uploadPdfPage);
+                                    loginPage();
+                                } else if (response.status !== 200) {
+                                    notify({ data, type: 'danger' })
+                                    return;
+                                }
+                                body.removeChild(uploadPdfPage);
+                                showDataPage(data);
+                            } catch (error) {
+                                notify({ data: error, type: 'danger' });
+                            } finally {
+                                popup({ state: false });
+                            }
+                        },
+                        negativeCallBack: async () => {
+                            popup({ state: false });
+                            uploadPdfFormInput.value = '';
+                        }
+                    }),
+                    options: {
+                        backDrop: false,
+                        removeButton: false,
+                        backDropColor: 'rgba(0,0,0,0.75)',
+                    }
+                });
+            } else {
+                popup({
+                    state: true,
+                    content: loaderCircle({ size: '50' }),
+                    options: {
+                        removeButton: false,
+                    }
+                });
+                try {
+                    const response = await fetch('/api/datas/parse-pdf', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await response.json();
+                    if (response.status === 401) {
+                        localStorage.setItem('currentPage', '0');
+                        body.removeChild(uploadPdfPage);
+                        loginPage();
+                    } else if (response.status !== 200) {
+                        notify({ data, type: 'danger' })
+                        return;
+                    }
+                    body.removeChild(uploadPdfPage);
+                    showDataPage(data);
+                } catch (error) {
+                    notify({ data: error, type: 'danger' });
+                } finally {
+                    popup({ state: false });
+                }
             }
-            body.removeChild(uploadPdfPage);
-            showDataPage(data);
+        } catch (error) {
+            popup({ state: false });
+            notify({ data: error, type: 'danger' });
         }
-    }
+    };
     const uploadIcon = document.createElement('label');
     uploadIcon.classList.add('upload-label');
     uploadIcon.setAttribute('for', 'upload');
@@ -100,6 +153,7 @@ const uploadPdfPage = () => {
     uploadPdfForm.appendChild(uploadPdfFormInput);
     uploadPdfForm.appendChild(uploadIcon);
     uploadPdfPage.appendChild(uploadPdfForm);
+    uploadPdfPage.appendChild(logoutButton);
     body.appendChild(uploadPdfPage);
 };
 
