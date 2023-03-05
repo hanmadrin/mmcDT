@@ -1,9 +1,24 @@
 import { notify } from "./library.js";
+import loginPage from "./loginPage.js";
 import uploadPdfPage from "./uploadPdfPage.js";
 const showDataPage = (data) => {
     const body = document.querySelector('#main');
     const showDataPage = document.createElement('div');
     showDataPage.classList.add('show-data-page');
+    const logoutButton = document.createElement('button');
+    logoutButton.classList.add('logout-button');
+    logoutButton.innerText = 'Logout';
+    const logout = async () => {
+        const response = await fetch('/api/users/logout', {
+            method: 'GET',
+        });
+        const data = await response.json();
+        notify({ data: data.message, type: 'success' });
+        localStorage.setItem('currentPage', '0');
+        body.removeChild(showDataPage);
+        loginPage();
+    };
+    logoutButton.addEventListener('click', logout);
     const showDataContent = document.createElement('div');
     showDataContent.classList.add('show-data-content');
     const buttonDiv = document.createElement('div');
@@ -96,6 +111,7 @@ const showDataPage = (data) => {
     showDataContent.appendChild(showBody);
     showDataContent.appendChild(showFooter);
     showDataPage.appendChild(showDataContent);
+    showDataPage.appendChild(logoutButton);
     body.appendChild(showDataPage);
 };
 

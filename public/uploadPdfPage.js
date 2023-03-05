@@ -6,6 +6,20 @@ const uploadPdfPage = () => {
     const body = document.querySelector('body');
     const uploadPdfPage = document.createElement('div');
     uploadPdfPage.classList.add('upload-pdf-page');
+    const logoutButton = document.createElement('button');
+    logoutButton.classList.add('logout-button');
+    logoutButton.innerText = 'Logout';
+    const logout = async () => {
+        const response = await fetch('/api/users/logout', {
+            method: 'GET',
+        });
+        const data = await response.json();
+        notify({ data: data.message, type: 'success' });
+        localStorage.setItem('currentPage', '0');
+        body.removeChild(uploadPdfPage);
+        loginPage();
+    };
+    logoutButton.addEventListener('click', logout);
     const uploadPdfForm = document.createElement('form');
     uploadPdfForm.classList.add('upload-pdf-form');
     const uploadPdfFormTitle = document.createElement('h1');
@@ -100,6 +114,7 @@ const uploadPdfPage = () => {
     uploadPdfForm.appendChild(uploadPdfFormInput);
     uploadPdfForm.appendChild(uploadIcon);
     uploadPdfPage.appendChild(uploadPdfForm);
+    uploadPdfPage.appendChild(logoutButton);
     body.appendChild(uploadPdfPage);
 };
 
