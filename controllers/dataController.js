@@ -4,6 +4,26 @@ const ExpressError = require('../utilities/expressError');
 const { pdfToText } = require('../utilities/pdfToText');
 const { renameFile } = require('../utilities/renameFile');
 
+module.exports.isPdfExists = async (req, res, next) => {
+    try {
+        const { fileName } = req.params;
+        const isDataExists = await File.findOne({
+            where: {
+                file_name: fileName,
+            },
+            include: [
+                {
+                    model: Data,
+                    attributes: ['id'],
+                }
+            ],
+        });
+        res.json({ isPdfExists: isDataExists?.dataValues?.Data?.length > 0 });
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports.parsePdf = async (req, res, next) => {
     try {
         // create uploads folder if it doesn't exist
@@ -37,24 +57,41 @@ module.exports.savePdfData = async (req, res, next) => {
             originalName,
         } = req.body;
 
-        const username = req.cookies.username;
-        const user = await User.findOne({
+        const isPdfExists = await File.findOne({
             where: {
-                username,
+                file_name: originalName,
             },
+            include: [
+                {
+                    model: Data,
+                    attributes: ['id'],
+                }
+            ],
         });
-        if (!user)
-            throw new ExpressError(400, "Invalid username");
 
-        const savedFile = await File.create({
-            file_name: originalName,
-            time_string: new Date().getTime(),
-            user_id: user.id,
-        });
-        if (!savedFile)
-            throw new ExpressError(500, "Error saving file");
+        let savedFile;
+        if (isPdfExists?.dataValues?.Data?.length > 0) {
+            savedFile = isPdfExists;
+        } else {
+            const username = req.cookies.username;
+            const user = await User.findOne({
+                where: {
+                    username,
+                },
+            });
+            if (!user)
+                throw new ExpressError(400, "Invalid username");
 
-        const savedData = await Data.bulkCreate([
+            savedFile = await File.create({
+                file_name: originalName,
+                time_string: new Date().getTime(),
+                user_id: user.id,
+            });
+            if (!savedFile)
+                throw new ExpressError(500, "Error saving file");
+        }
+
+        await Data.bulkCreate([
             ...body.map((data, index) => ({
                 header: JSON.stringify(header),
                 body: JSON.stringify(data),
@@ -62,6 +99,7 @@ module.exports.savePdfData = async (req, res, next) => {
                 file_id: savedFile.id,
             }))
         ]);
+
         res.json({ message: "Data saved successfully" });
     } catch (err) {
         next(err);
