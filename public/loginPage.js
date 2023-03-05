@@ -44,6 +44,11 @@ const loginPage = () => {
         uploadPdfPage();
     };
     loginFormButton.addEventListener('click', verifyLogin);
+    loginFormPassword.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            verifyLogin();
+        }
+    });
     loginFormButton.innerText = 'Login';
     loginForm.appendChild(loginFormTitle);
     loginForm.appendChild(loginFormInput);
