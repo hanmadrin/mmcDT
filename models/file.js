@@ -30,5 +30,7 @@ const File = sequelize.define(
     },
 
 );
+// sync force
+// File.sync({ force: true });
 
 module.exports = File;

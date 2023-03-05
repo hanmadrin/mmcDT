@@ -39,5 +39,6 @@ const Data = sequelize.define(
     },
 
 );
-
+// sync force
+// Data.sync({ force: true });
 module.exports = Data;
