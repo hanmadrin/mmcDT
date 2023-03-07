@@ -1,9 +1,10 @@
 import showDataPage from './showDataPage.js';
 import loginPage from './loginPage.js';
 import { notify, popup, confirmationPopup, loaderCircle } from './library.js';
+import dashBoardPage from './dashboardPage.js';
 
 const uploadPdfPage = () => {
-    const body = document.querySelector('body');
+    const body = document.querySelector('#main');
     const uploadPdfPage = document.createElement('div');
     uploadPdfPage.classList.add('upload-pdf-page');
     const logoutButton = document.createElement('button');
@@ -154,6 +155,16 @@ const uploadPdfPage = () => {
     uploadPdfForm.appendChild(uploadIcon);
     uploadPdfPage.appendChild(uploadPdfForm);
     uploadPdfPage.appendChild(logoutButton);
+    //Dash board button
+    const dashBoardButton = document.createElement('button');
+    dashBoardButton.classList.add('dash-board-button');
+    dashBoardButton.innerText = 'Dash Board';
+    dashBoardButton.addEventListener('click', () => {
+        localStorage.setItem('currentPage', '2');
+        body.removeChild(uploadPdfPage);
+        dashBoardPage();
+    });
+    uploadPdfPage.appendChild(dashBoardButton);
     body.appendChild(uploadPdfPage);
 };
 

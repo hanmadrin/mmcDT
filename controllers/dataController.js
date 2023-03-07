@@ -4,6 +4,8 @@ const ExpressError = require('../utilities/expressError');
 const { pdfToText } = require('../utilities/pdfToText');
 const { renameFile } = require('../utilities/renameFile');
 const {deleteFile} = require('../utilities/deleteFile');
+const { Op } = require("sequelize");
+
 module.exports.isPdfExists = async (req, res, next) => {
     try {
         const { fileName } = req.params;
@@ -157,4 +159,145 @@ module.exports.updateExtensionDataStatus = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
+};
+
+module.exports.getFilesWithStatus = async (req, res, next) => {
+    const { page = 1, status, username, date, fileName } = req.query;
+
+    let rowCount = 0;
+    let dataConditions = {};
+    let userConditions = {};
+    let where = {};
+
+    if (status === 'completed') {
+        dataConditions = {
+            status: {
+                [Op.eq]: 'completed'
+            }
+        }
+    } else if (status === 'error') {
+        dataConditions = {
+            status: {
+                [Op.in]: ['error', 'fileError']
+            }
+        }
+    } else if (status === 'inQueue') {
+        dataConditions = {
+            status: {
+                [Op.is]: null,
+            }
+        }
+    } else if (status === 'processing') {
+        dataConditions = {
+            status: {
+                [Op.and]: {
+                    [Op.notIn]: ['completed', 'error', 'fileError'],
+                    [Op.not]: null
+                }
+            }
+        }
+    }
+
+    if (username) {
+        userConditions = {
+            username: {
+                [Op.like]: `%${username}%`
+            }
+        }
+    }
+
+    if (date) {
+        const timeString = new Date(date).getTime();
+        const nextDay = new Date(date).getTime() + 86400000;
+        where = {
+            time_string: {
+                [Op.between]: [timeString, nextDay]
+            }
+        };
+    }
+
+    if (fileName) {
+        where = {
+            ...where,
+            file_name: {
+                [Op.like]: `%${fileName}%`
+            }
+        };
+    }
+
+    let files = await File.findAndCountAll({
+        where,
+        include: [
+            {
+                model: Data,
+                attributes: ['id', 'status'],
+                where: {
+                    ...dataConditions,
+                },
+            },
+            {
+                model: User,
+                attributes: ['username'],
+                where: {
+                    ...userConditions,
+                },
+            }
+        ],
+        distinct: true,
+        limit: 10,
+        offset: (page - 1) * 10,
+    });
+
+    rowCount = files.count;
+    files = await File.findAll({
+        where: {
+            id: {
+                [Op.in]: files.rows.map(file => file.id)
+            }
+        },
+        include: [
+            {
+                model: Data,
+                attributes: ['id', 'status']
+            },
+            {
+                model: User,
+                attributes: ['username']
+            }
+        ],
+    });
+
+    files = files.map(file => {
+        const { Data, ...rest } = file.dataValues;
+        const status = [];
+        if (Data.length > 0) {
+            const errorStatus = Data.find(data => data.status === 'error' || data.status === 'fileError');
+            if (errorStatus) {
+                status.push('error');
+            }
+            const completedStatus = Data.find(data => data.status === 'completed');
+            if (completedStatus) {
+                status.push('completed');
+            }
+            const inQueueStatus = Data.find(data => data.status === null);
+            if (inQueueStatus) {
+                status.push('inQueue');
+            }
+            const processingStatus = Data.find(data => data.status !== 'completed' && data.status !== 'error' && data.status !== 'fileError' && data.status !== null);
+            if (processingStatus) {
+                status.push('processing');
+            }
+        }
+        else {
+            status.push('noDataFound');
+        }
+        return {
+            ...rest,
+            status,
+        };
+    });
+    res.json({
+        count: rowCount,
+        rows: files,
+    });
 };
