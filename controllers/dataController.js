@@ -5,6 +5,7 @@ const { pdfToText } = require('../utilities/pdfToText');
 const { renameFile } = require('../utilities/renameFile');
 const { deleteFile } = require('../utilities/deleteFile');
 const { Op } = require("sequelize");
+const { asyncForEach } = require('../utilities/asyncForEach');
 
 module.exports.isPdfExists = async (req, res, next) => {
     try {
@@ -314,6 +315,64 @@ module.exports.getAllFileData = async (req, res, next) => {
         });
 
         res.json(data);
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.updatePdfData = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const {
+            header,
+            body,
+            footer,
+        } = req.body;
+
+        const username = req.cookies.username;
+        const user = await User.findOne({
+            where: {
+                username,
+            },
+        });
+        if (!user)
+            throw new ExpressError(400, "Invalid username");
+
+        console.log(req.params);
+        const updatedFile = await File.update(
+            {
+                user_id: user.id,
+                time_string: new Date().getTime(),
+            },
+            {
+                where: {
+                    id: id,
+                }
+            }
+        );
+
+        if (!updatedFile)
+            throw new ExpressError(500, "Error saving file");
+
+        await asyncForEach(body, async (data, index) => {
+            const updatedData = await Data.update(
+                {
+                    header: JSON.stringify(header),
+                    body: JSON.stringify(data),
+                    footer: JSON.stringify(footer),
+                },
+                {
+                    where: {
+                        file_id: id,
+                        id: data.id,
+                    }
+                }
+            );
+            if (!updatedData)
+                throw new ExpressError(500, "Error saving data");
+        });
+
+        res.json({ message: "Data updated successfully" });
     } catch (err) {
         next(err);
     }

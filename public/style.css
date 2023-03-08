@@ -154,6 +154,7 @@ td {
 
 .api-data {
   font-weight: bold;
+  padding: 2.5px;
 }
 
 .border-bottom {
@@ -378,6 +379,10 @@ td {
 .disabled {
   background: #e0e0e0;
   color: #9e9e9e;
+}
+
+.highlight{
+  background: #ffe600 !important;
 }
 
 

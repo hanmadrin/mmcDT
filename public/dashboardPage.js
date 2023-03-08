@@ -1,6 +1,7 @@
 import editDataPage from "./editDataPage.js";
 import { loaderCircle, notify, popup } from "./library.js";
 import loginPage from "./loginPage.js";
+import showDataPopup from "./showDataPopup.js";
 import uploadPdfPage from "./uploadPdfPage.js";
 
 const fileFields = {
@@ -51,13 +52,29 @@ const getFilesWithStatus = async (dashBoardDataList) => {
     div.setAttribute('id', 'status-data');
     data.rows.forEach((file) => {
         const dashBoardData = document.createElement('div');
-        dashBoardData.addEventListener('click', () => {
-            const body = document.querySelector('#main');
-            //get the child element of body
-            const child = body.lastElementChild;
-            //remove the child element
-            body.removeChild(child);
-            editDataPage(file.file_name, file.id);
+        dashBoardData.addEventListener('click', async () => {
+            const response = await fetch(`/api/datas/get-all-file-data/${file.id}`, {
+                method: 'GET',
+            });
+            const fetchedData = await response.json();
+            const modifiedResponse = (fetchedData.map(row => ({ id: row.id, ...JSON.parse(row.body) })));
+            const data = {};
+            data.response = {
+                fileId: file.id,
+                header: JSON.parse(fetchedData[0].header),
+                body: modifiedResponse,
+                footer: JSON.parse(fetchedData[0].footer),
+            };
+            popup({
+                state: true,
+                content: showDataPopup(data, 'edit'),
+                options: {
+                    removeButton: false,
+                    backDrop: false,
+                    backDropColor: 'rgba(0,0,0,0.75)',
+                }
+            });
+
         });
         dashBoardData.classList.add('dashboard-data');
         Object.keys(fileFields).forEach((key) => {

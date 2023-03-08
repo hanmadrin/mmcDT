@@ -2,7 +2,93 @@ import dashBoardPage from "./dashboardPage.js";
 import { loaderCircle, notify, popup } from "./library.js";
 import loginPage from "./loginPage.js";
 import uploadPdfPage from "./uploadPdfPage.js";
-const showDataPopup = (data) => {
+
+const state = {
+    data: {},
+    type: ''
+};
+
+const renderHeader = (data) => {
+    const div = document.createElement('div');
+    Object.keys(data.response.header).forEach((item) => {
+        const p = document.createElement('p');
+        const span = document.createElement('span');
+        span.innerText = `${item} - `;
+        p.appendChild(span);
+        const span2 = document.createElement('span');
+        span2.innerText = data.response.header[item];
+        if (state.type === 'edit') {
+            span2.setAttribute('contenteditable', 'true');
+            span2.addEventListener('input', (e) => {
+                span2.classList.add('highlight');
+                state.data.response.header[item] = e.target.innerText;
+            });
+        }
+        span2.classList.add('api-data');
+        p.appendChild(span2);
+        div.appendChild(p);
+    });
+    return div;
+};
+
+const renderTableRows = (data) => {
+    const table = document.createElement('table');
+    const tr = document.createElement('tr');
+    data.response.body.forEach((item, index) => {
+        if (index > 0) return;
+        Object.keys(item).forEach((key) => {
+            const th = document.createElement('th');
+            th.innerText = key;
+            tr.appendChild(th);
+        });
+    });
+    table.appendChild(tr);
+    data.response.body.forEach((item, index) => {
+        const dataTr = document.createElement('tr');
+        Object.keys(item).forEach((key) => {
+            const td = document.createElement('td');
+            td.innerText = item[key];
+            if (state.type === 'edit') {
+                td.setAttribute('contenteditable', 'true');
+                td.addEventListener('input', (e) => {
+                    td.classList.add('highlight');
+                    state.data.response.body[index][key] = e.target.innerText;
+                });
+            }
+            dataTr.appendChild(td);
+        });
+        table.appendChild(dataTr);
+    });
+    return table;
+};
+
+const renderFooter = (data) => {
+    const div = document.createElement('div');
+    Object.keys(data.response.footer).forEach((item) => {
+        const p = document.createElement('p');
+        const span = document.createElement('span');
+        span.innerText = `${item} - `;
+        p.appendChild(span);
+        const span2 = document.createElement('span');
+        span2.innerText = data.response.footer[item];
+        if (state.type === 'edit') {
+            span2.setAttribute('contenteditable', 'true');
+            span2.addEventListener('input', (e) => {
+                span2.classList.add('highlight');
+                state.data.response.footer[item] = e.target.innerText;
+            });
+        }
+        span2.classList.add('api-data');
+        p.appendChild(span2);
+        div.appendChild(p);
+    });
+    return div;
+}
+
+
+const showDataPopup = (data, type) => {
+    state.data = data;
+    state.type = type;
     // const body = document.querySelector('#main');
     const showDataPage = document.createElement('div');
     showDataPage.classList.add('show-data-popup');
@@ -37,39 +123,78 @@ const showDataPopup = (data) => {
     backButton.innerText = 'Cancel';
     const backToUpload = () => {
         // body.removeChild(showDataPage);
-        uploadPdfPage();
-        popup({ state: false });
+        if (type === 'edit') {
+            popup({ state: false });
+            window.history.pushState({}, '', `/dashboard`);
+            dashBoardPage();
+            return;
+        } else {
+            popup({ state: false });
+            window.history.pushState({}, '', `/upload`);
+            uploadPdfPage();
+            return;
+        }
     };
     backButton.addEventListener('click', backToUpload);
     const confirmButton = document.createElement('button');
     confirmButton.classList.add('confirm-button');
     confirmButton.innerText = 'Confirm';
     const confirmData = async () => {
-        popup({
-            state: true,
-            content: loaderCircle({size: '50'}),
-            options:{
-                removeButton: false,
-                backDropColor: 'rgba(0,0,0,0)',
+        if (state.type == 'show') {
+            popup({
+                state: true,
+                content: loaderCircle({ size: '50' }),
+                options: {
+                    removeButton: false,
+                    backDropColor: 'rgba(0,0,0,0)',
+                }
+            });
+            const response = await fetch('/api/datas/save-pdf-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(state.data.response)
+            });
+            const responseData = await response.json();
+            popup({ state: false });
+            if (response.status !== 200) {
+                notify({ data: responseData, type: 'danger' })
+                return;
             }
-        });
-        const response = await fetch('/api/datas/save-pdf-data', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data.response)
-        });
-        const responseData = await response.json();
-        popup({ state: false });
-        if (response.status !== 200) {
-            notify({ data: responseData, type: 'danger' })
-            return;
+            notify({ data: 'Uploaded successfully', type: 'success' });
+            // body.removeChild(showDataPage);
+            uploadPdfPage();
+            popup({ state: false });
+        } else {
+            // update-pdf-data
+            console.log(state.data);
+            popup({
+                state: true,
+                content: loaderCircle({ size: '50' }),
+                options: {
+                    removeButton: false,
+                    backDropColor: 'rgba(0,0,0,0)',
+                }
+            });
+            const response = await fetch(`/api/datas/update-pdf-data/${state.data.response.fileId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(state.data.response)
+            });
+            const responseData = await response.json();
+            popup({ state: false });
+            if (response.status !== 200) {
+                notify({ data: responseData, type: 'danger' })
+                return;
+            }
+            notify({ data: 'Uploaded successfully', type: 'success' });
+            // body.removeChild(showDataPage);
+            dashBoardPage();
+            popup({ state: false });
         }
-        notify({ data: 'Uploaded successfully', type: 'success' });
-        // body.removeChild(showDataPage);
-        uploadPdfPage();
-        popup({ state: false });
     };
     confirmButton.addEventListener('click', confirmData);
     buttonDiv.appendChild(backButton);
@@ -77,55 +202,15 @@ const showDataPopup = (data) => {
     //header
     const showHeader = document.createElement('div');
     showHeader.classList.add('show-header');
-    Object.keys(data.response.header).forEach((item) => {
-        const p = document.createElement('p');
-        const span = document.createElement('span');
-        span.innerText = `${item} - `;
-        p.appendChild(span);
-        const span2 = document.createElement('span');
-        span2.innerText = data.response.header[item];
-        span2.classList.add('api-data');
-        p.appendChild(span2);
-        showHeader.appendChild(p);
-    });
+    showHeader.appendChild(renderHeader(data));
     //body
     const showBody = document.createElement('div');
     showBody.classList.add('show-body');
-    const table = document.createElement('table');
-    const tr = document.createElement('tr');
-    data.response.body.forEach((item, index) => {
-        if (index > 0) return;
-        Object.keys(item).forEach((key) => {
-            const th = document.createElement('th');
-            th.innerText = key;
-            tr.appendChild(th);
-        });
-    });
-    table.appendChild(tr);
-    data.response.body.forEach((item) => {
-        const dataTr = document.createElement('tr');
-        Object.keys(item).forEach((key) => {
-            const td = document.createElement('td');
-            td.innerText = item[key];
-            dataTr.appendChild(td);
-        });
-        table.appendChild(dataTr);
-    })
-    showBody.appendChild(table);
+    showBody.appendChild(renderTableRows(data));
     //footer 
     const showFooter = document.createElement('div');
     showFooter.classList.add('show-footer');
-    Object.keys(data.response.footer).forEach((item) => {
-        const p = document.createElement('p');
-        const span = document.createElement('span');
-        span.innerText = `${item} - `;
-        p.appendChild(span);
-        const span2 = document.createElement('span');
-        span2.innerText = data.response.footer[item];
-        span2.classList.add('api-data');
-        p.appendChild(span2);
-        showFooter.appendChild(p);
-    });
+    showFooter.appendChild(renderFooter(data));
     showDataContent.appendChild(buttonDiv);
     showDataContent.appendChild(showHeader);
     showDataContent.appendChild(showBody);
