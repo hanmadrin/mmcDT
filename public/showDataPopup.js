@@ -48,9 +48,15 @@ const renderTableRows = (data) => {
             tr.appendChild(th);
         });
     });
+    const th = document.createElement('th');
+    if (state.type === 'edit') {
+        th.innerText = 'action';
+    }
+    tr.appendChild(th);
     table.appendChild(tr);
     data.response.body.forEach((item, index) => {
         const dataTr = document.createElement('tr');
+        dataTr.setAttribute('data-index', index);
         Object.keys(item).forEach((key) => {
             const td = document.createElement('td');
             if (key === 'status') {
@@ -105,6 +111,18 @@ const renderTableRows = (data) => {
                 dataTr.appendChild(td);
             }
         });
+        const td = document.createElement('td');
+        if (state.type === 'edit') {
+            const button = document.createElement('button');
+            button.innerText = 'Delete';
+            button.classList.add('delete-btn');
+            button.addEventListener('click', () => {
+                const findElement = document.querySelector(`[data-index="${index}"]`);
+                findElement.classList.add('delete-row');
+            });
+            td.appendChild(button);
+        }
+        dataTr.appendChild(td);
         table.appendChild(dataTr);
     });
     return table;

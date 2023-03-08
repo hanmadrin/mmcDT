@@ -385,6 +385,26 @@ td {
   background: #ffe600 !important;
 }
 
+.delete-btn{
+  background: #ff3e3e;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 12px;
+  display: inline-block;
+  border: none;
+  margin-right: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.delete-row{
+  background: #ff00001f;
+  text-decoration: line-through;
+  cursor: pointer;
+  user-select: none;
+}
 
 /* position-fixed right-30px top-30px zindex-8 overflow-y-auto w-200px h-100vh pointer-events-none */
 /* colors */
