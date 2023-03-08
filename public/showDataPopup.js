@@ -5,7 +5,8 @@ import uploadPdfPage from "./uploadPdfPage.js";
 
 const state = {
     data: {},
-    type: ''
+    type: '',
+    deletedRows: []
 };
 
 const status = {
@@ -117,8 +118,15 @@ const renderTableRows = (data) => {
             button.innerText = 'Delete';
             button.classList.add('delete-btn');
             button.addEventListener('click', () => {
+                if (!state.deletedRows.includes(data.response.body[index].id)) {
                 const findElement = document.querySelector(`[data-index="${index}"]`);
                 findElement.classList.add('delete-row');
+                state.deletedRows.push(data.response.body[index].id);
+                } else {
+                    const findElement = document.querySelector(`[data-index="${index}"]`);
+                    findElement.classList.remove('delete-row');
+                    state.deletedRows = state.deletedRows.filter((item) => item !== data.response.body[index].id);
+                }
             });
             td.appendChild(button);
         }
@@ -234,7 +242,7 @@ const showDataPopup = (data, type) => {
             popup({ state: false });
         } else {
             // update-pdf-data
-            console.log(state.data);
+            state.data.response.deletedRows = state.deletedRows;
             popup({
                 state: true,
                 content: loaderCircle({ size: '50' }),
@@ -259,6 +267,7 @@ const showDataPopup = (data, type) => {
             notify({ data: 'Uploaded successfully', type: 'success' });
             // body.removeChild(showDataPage);
             dashBoardPage();
+            state.deletedRows = [];
             popup({ state: false });
         }
     };

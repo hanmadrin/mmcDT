@@ -327,7 +327,22 @@ module.exports.updatePdfData = async (req, res, next) => {
             header,
             body,
             footer,
+            deletedRows
         } = req.body;
+
+        if (deletedRows.length) {
+            await asyncForEach(deletedRows, async (id, index) => {
+                const deletedData = await Data.destroy({
+                    where: {
+                        id: id,
+                    }
+                });
+                if (!deletedData)
+                    throw new ExpressError(500, "Error deleting data");
+            });
+        }
+
+        const filteredBody = body.filter(data => !deletedRows.includes(data.id));
 
         const username = req.cookies.username;
         const user = await User.findOne({
@@ -338,7 +353,6 @@ module.exports.updatePdfData = async (req, res, next) => {
         if (!user)
             throw new ExpressError(400, "Invalid username");
 
-        console.log(req.params);
         const updatedFile = await File.update(
             {
                 user_id: user.id,
@@ -354,24 +368,26 @@ module.exports.updatePdfData = async (req, res, next) => {
         if (!updatedFile)
             throw new ExpressError(500, "Error saving file");
 
-        await asyncForEach(body, async (data, index) => {
-            const updatedData = await Data.update(
-                {
-                    header: JSON.stringify(header),
-                    body: JSON.stringify(data),
-                    footer: JSON.stringify(footer),
-                    status: data.status,
-                },
-                {
-                    where: {
-                        file_id: id,
-                        id: data.id,
+        if (filteredBody.length) {
+            await asyncForEach(filteredBody, async (data, index) => {
+                const updatedData = await Data.update(
+                    {
+                        header: JSON.stringify(header),
+                        body: JSON.stringify(data),
+                        footer: JSON.stringify(footer),
+                        status: data.status,
+                    },
+                    {
+                        where: {
+                            file_id: id,
+                            id: data.id,
+                        }
                     }
-                }
-            );
-            if (!updatedData)
-                throw new ExpressError(500, "Error saving data");
-        });
+                );
+                if (!updatedData)
+                    throw new ExpressError(500, "Error saving data");
+            });
+        }
 
         res.json({ message: "Data updated successfully" });
     } catch (err) {
