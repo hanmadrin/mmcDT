@@ -443,7 +443,7 @@ body {
   position: absolute;
   top: 0;
   right: 20px;
-  background: var(--bg-danger);
+  background: rgba(255, 0, 0, 0.589);
   color: #fff;
   padding: 10px 20px;
   border-radius: 5px;

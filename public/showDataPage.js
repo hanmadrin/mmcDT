@@ -14,8 +14,8 @@ const showDataPage = (data) => {
         });
         const data = await response.json();
         notify({ data: data.message, type: 'success' });
-        localStorage.setItem('currentPage', '0');
         body.removeChild(showDataPage);
+        window.history.pushState({}, '', `/`);
         loginPage();
     };
     logoutButton.addEventListener('click', logout);

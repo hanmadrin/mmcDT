@@ -47,7 +47,7 @@ const loginPage = () => {
                 notify({ data, type: 'danger' });
                 return;
             }
-            localStorage.setItem('currentPage', '1');
+            window.history.pushState({}, '', `/upload`);
             body.removeChild(loginPage);
             uploadPdfPage();
         } catch (err) {

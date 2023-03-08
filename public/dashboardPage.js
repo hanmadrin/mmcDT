@@ -153,8 +153,8 @@ const dashBoardPage = async () => {
         });
         const data = await response.json();
         notify({ data: data.message, type: 'success' });
-        localStorage.setItem('currentPage', '0');
         body.removeChild(dashBoardPage);
+        window.history.pushState({}, '', `/`);
         loginPage();
     };
     logoutButton.addEventListener('click', logout);
