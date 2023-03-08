@@ -336,12 +336,14 @@ td {
   user-select: none;
 }
 
-.search-header,.time-header {
+.search-header,
+.time-header {
   display: flex;
   flex-direction: column;
 }
 
-.dashboard-search,.date-picker {
+.dashboard-search,
+.date-picker {
   padding: 5px;
   width: 90%;
   padding: 10px;
@@ -351,14 +353,14 @@ td {
   margin-top: 10px;
 }
 
-.pagination{
+.pagination {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 20px 0;
 }
 
-.pagination-button{
+.pagination-button {
   background: #dadada;
   color: #000;
   padding: 10px 20px;
@@ -373,7 +375,7 @@ td {
   user-select: none;
 }
 
-.disabled{
+.disabled {
   background: #e0e0e0;
   color: #9e9e9e;
 }
@@ -437,6 +439,46 @@ body {
   color: var(--font-color-normal);
   font-size: var(--font-size-normal);
   font-weight: var(--font-weight-normal);
+}
+
+.upload-button{
+  position: absolute;
+  top: 0;
+  right: 120px;
+  background: rgba(25, 212, 0, 0.589);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  margin-top: 20px;
+  display: inline-block;
+  border: none;
+}
+
+.upload-button:hover {
+  background: rgba(0, 255, 0, 0.616);
+  cursor: pointer;
+}
+
+.dashboard-button {
+  position: absolute;
+  top: 0;
+  right: 120px;
+  background: rgba(0, 247, 255, 0.589);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  margin-top: 20px;
+  display: inline-block;
+  border: none;
+}
+
+.dashboard-button:hover {
+  background: rgba(0, 255, 255, 0.733);
+  cursor: pointer;
 }
 
 .logout-button {

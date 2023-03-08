@@ -1,5 +1,6 @@
 import { loaderCircle, notify, popup } from "./library.js";
 import loginPage from "./loginPage.js";
+import uploadPdfPage from "./uploadPdfPage.js";
 
 const fileFields = {
     file_name: 'File Name',
@@ -158,6 +159,14 @@ const dashBoardPage = async () => {
         loginPage();
     };
     logoutButton.addEventListener('click', logout);
+    const uploadButton = document.createElement('button');
+    uploadButton.classList.add('upload-button');
+    uploadButton.innerText = 'Upload';
+    uploadButton.addEventListener('click', () => {
+        body.removeChild(dashBoardPage);
+        window.history.pushState({}, '', `/upload`);
+        uploadPdfPage();
+    });
     const dashBoardContent = document.createElement('div');
     dashBoardContent.classList.add('dashboard-content');
     const dashBoardHeader = document.createElement('div');
@@ -235,6 +244,7 @@ const dashBoardPage = async () => {
     dashBoardContent.appendChild(dashBoardBody);
     dashBoardPage.appendChild(dashBoardContent);
     dashBoardPage.appendChild(logoutButton);
+    dashBoardPage.appendChild(uploadButton);
     body.appendChild(dashBoardPage);
 };
 

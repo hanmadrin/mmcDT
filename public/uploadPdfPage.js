@@ -21,6 +21,14 @@ const uploadPdfPage = () => {
         loginPage();
     };
     logoutButton.addEventListener('click', logout);
+    const dashboardButton = document.createElement('button');
+    dashboardButton.classList.add('dashboard-button');
+    dashboardButton.innerText = 'Dashboard';
+    dashboardButton.addEventListener('click', () => {
+        body.removeChild(uploadPdfPage);
+        window.history.pushState({}, '', `/dashboard`);
+        dashBoardPage();
+    });
     const uploadPdfForm = document.createElement('form');
     uploadPdfForm.classList.add('upload-pdf-form');
     const uploadPdfFormTitle = document.createElement('h1');
@@ -155,16 +163,7 @@ const uploadPdfPage = () => {
     uploadPdfForm.appendChild(uploadIcon);
     uploadPdfPage.appendChild(uploadPdfForm);
     uploadPdfPage.appendChild(logoutButton);
-    //Dash board button
-    const dashBoardButton = document.createElement('button');
-    dashBoardButton.classList.add('dash-board-button');
-    dashBoardButton.innerText = 'Dash Board';
-    dashBoardButton.addEventListener('click', () => {
-        body.removeChild(uploadPdfPage);
-        window.history.pushState({}, '', `/dashboard`);
-        dashBoardPage();
-    });
-    uploadPdfPage.appendChild(dashBoardButton);
+    uploadPdfPage.appendChild(dashboardButton);
     body.appendChild(uploadPdfPage);
 };
 
