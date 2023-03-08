@@ -49,6 +49,7 @@ const uploadPdfPage = () => {
                 content: loaderCircle({ size: '50' }),
                 options: {
                     removeButton: false,
+                    backDropColor: 'rgba(0, 0, 0, 0)',
                 }
             });
             const responseData = await fetch(`/api/datas/is-pdf-exists/${uploadPdfFormInput.files[0].name}`, {
@@ -69,6 +70,7 @@ const uploadPdfPage = () => {
                                 content: loaderCircle({ size: '50' }),
                                 options: {
                                     removeButton: false,
+                                    backDropColor: 'rgba(0, 0, 0, 0)',
                                 }
                             });
                             try {
@@ -110,6 +112,7 @@ const uploadPdfPage = () => {
                     content: loaderCircle({ size: '50' }),
                     options: {
                         removeButton: false,
+                        backDropColor: 'rgba(0, 0, 0, 0)',
                     }
                 });
                 try {

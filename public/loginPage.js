@@ -32,6 +32,7 @@ const loginPage = () => {
             content: loaderCircle({ size: '50' }),
             options: {
                 removeButton: false,
+                backDropColor: 'rgba(0, 0, 0, 0)',
             }
         });
         try {

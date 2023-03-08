@@ -30,6 +30,7 @@ const getFilesWithStatus = async (dashBoardDataList) => {
         content: loaderCircle({ size: '50' }),
         options: {
             removeButton: false,
+            backDropColor: 'rgba(0,0,0,0,0)',
         }
     });
     const response =

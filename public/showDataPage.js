@@ -49,6 +49,7 @@ const showDataPage = (data) => {
             content: loaderCircle({size: '50'}),
             options:{
                 removeButton: false,
+                backDropColor: 'rgba(0, 0, 0, 0)',
             }
         });
         const response = await fetch('/api/datas/save-pdf-data', {
