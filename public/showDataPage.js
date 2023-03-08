@@ -1,3 +1,4 @@
+import dashBoardPage from "./dashboardPage.js";
 import { loaderCircle, notify, popup } from "./library.js";
 import loginPage from "./loginPage.js";
 import uploadPdfPage from "./uploadPdfPage.js";
@@ -14,11 +15,19 @@ const showDataPage = (data) => {
         });
         const data = await response.json();
         notify({ data: data.message, type: 'success' });
-        localStorage.setItem('currentPage', '0');
         body.removeChild(showDataPage);
+        window.history.pushState({}, '', `/`);
         loginPage();
     };
     logoutButton.addEventListener('click', logout);
+    const dashboardButton = document.createElement('button');
+    dashboardButton.classList.add('dashboard-button');
+    dashboardButton.innerText = 'Dashboard';
+    dashboardButton.addEventListener('click', () => {
+        body.removeChild(showDataPage);
+        window.history.pushState({}, '', `/dashboard`);
+        dashBoardPage();
+    });
     const showDataContent = document.createElement('div');
     showDataContent.classList.add('show-data-content');
     const buttonDiv = document.createElement('div');
@@ -120,6 +129,7 @@ const showDataPage = (data) => {
     showDataContent.appendChild(showFooter);
     showDataPage.appendChild(showDataContent);
     showDataPage.appendChild(logoutButton);
+    showDataPage.appendChild(dashboardButton);
     body.appendChild(showDataPage);
 };
 

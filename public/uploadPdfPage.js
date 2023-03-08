@@ -16,11 +16,19 @@ const uploadPdfPage = () => {
         });
         const data = await response.json();
         notify({ data: data.message, type: 'success' });
-        localStorage.setItem('currentPage', '0');
         body.removeChild(uploadPdfPage);
+        window.history.pushState({}, '', `/`);
         loginPage();
     };
     logoutButton.addEventListener('click', logout);
+    const dashboardButton = document.createElement('button');
+    dashboardButton.classList.add('dashboard-button');
+    dashboardButton.innerText = 'Dashboard';
+    dashboardButton.addEventListener('click', () => {
+        body.removeChild(uploadPdfPage);
+        window.history.pushState({}, '', `/dashboard`);
+        dashBoardPage();
+    });
     const uploadPdfForm = document.createElement('form');
     uploadPdfForm.classList.add('upload-pdf-form');
     const uploadPdfFormTitle = document.createElement('h1');
@@ -70,7 +78,7 @@ const uploadPdfPage = () => {
                                 });
                                 const data = await response.json();
                                 if (response.status === 401) {
-                                    localStorage.setItem('currentPage', '0');
+                                    window.history.pushState({}, '', `/`);
                                     body.removeChild(uploadPdfPage);
                                     loginPage();
                                 } else if (response.status !== 200) {
@@ -111,7 +119,7 @@ const uploadPdfPage = () => {
                     });
                     const data = await response.json();
                     if (response.status === 401) {
-                        localStorage.setItem('currentPage', '0');
+                        window.history.pushState({}, '', `/`);
                         body.removeChild(uploadPdfPage);
                         loginPage();
                     } else if (response.status !== 200) {
@@ -155,16 +163,7 @@ const uploadPdfPage = () => {
     uploadPdfForm.appendChild(uploadIcon);
     uploadPdfPage.appendChild(uploadPdfForm);
     uploadPdfPage.appendChild(logoutButton);
-    //Dash board button
-    const dashBoardButton = document.createElement('button');
-    dashBoardButton.classList.add('dash-board-button');
-    dashBoardButton.innerText = 'Dash Board';
-    dashBoardButton.addEventListener('click', () => {
-        localStorage.setItem('currentPage', '2');
-        body.removeChild(uploadPdfPage);
-        dashBoardPage();
-    });
-    uploadPdfPage.appendChild(dashBoardButton);
+    uploadPdfPage.appendChild(dashboardButton);
     body.appendChild(uploadPdfPage);
 };
 
