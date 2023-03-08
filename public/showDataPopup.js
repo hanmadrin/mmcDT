@@ -8,6 +8,12 @@ const state = {
     type: ''
 };
 
+const status = {
+    error: 'error',
+    completed: 'completed',
+    inQueue: null
+};
+
 const renderHeader = (data) => {
     const div = document.createElement('div');
     Object.keys(data.response.header).forEach((item) => {
@@ -47,15 +53,57 @@ const renderTableRows = (data) => {
         const dataTr = document.createElement('tr');
         Object.keys(item).forEach((key) => {
             const td = document.createElement('td');
-            td.innerText = item[key];
-            if (state.type === 'edit') {
-                td.setAttribute('contenteditable', 'true');
-                td.addEventListener('input', (e) => {
-                    td.classList.add('highlight');
-                    state.data.response.body[index][key] = e.target.innerText;
-                });
+            if (key === 'status') {
+                if (state.type === 'edit') {
+                    //add dropdown for status
+                    const td = document.createElement('td');
+                    const select = document.createElement('select');
+                    select.classList.add('status-select');
+                    //get each key and value pair from status object
+                    let isChanged = false;
+                    for (const key in status) {
+                        const option = document.createElement('option');
+                        option.innerText = key;
+                        option.value = key;
+                        select.appendChild(option);
+                        if (status[key] === data.response.body[index].status) {
+                            isChanged = true;
+                            option.setAttribute('selected', 'selected');
+                        }
+                    }
+                    if (!isChanged) {
+                        if (data.response.body[index].status === 'fileError') {
+                            const option = document.createElement('option');
+                            option.innerText = 'fileError';
+                            option.value = 'fileError';
+                            option.setAttribute('selected', 'selected');
+                            select.appendChild(option);
+                        } else {
+                            const option = document.createElement('option');
+                            option.innerText = 'processing';
+                            option.value = 'processing';
+                            option.setAttribute('selected', 'selected');
+                            select.appendChild(option);
+                        }
+                    }
+                    select.addEventListener('change', (e) => {
+                        select.classList.add('highlight');
+                        state.data.response.body[index].status = e.target.value;
+                    });
+                    td.appendChild(select);
+                    dataTr.appendChild(td);
+                }
+            } else {
+                td.innerText = item[key];
+                if (state.type === 'edit') {
+                    td.setAttribute('contenteditable', 'true');
+                    td.addEventListener('input', (e) => {
+                        td.classList.add('highlight');
+                        state.data.response.body[index][key] = e.target.innerText;
+                    });
+                }
+                dataTr.appendChild(td);
             }
-            dataTr.appendChild(td);
         });
         table.appendChild(dataTr);
     });

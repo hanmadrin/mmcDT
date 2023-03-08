@@ -360,6 +360,7 @@ module.exports.updatePdfData = async (req, res, next) => {
                     header: JSON.stringify(header),
                     body: JSON.stringify(data),
                     footer: JSON.stringify(footer),
+                    status: data.status,
                 },
                 {
                     where: {

@@ -57,7 +57,7 @@ const getFilesWithStatus = async (dashBoardDataList) => {
                 method: 'GET',
             });
             const fetchedData = await response.json();
-            const modifiedResponse = (fetchedData.map(row => ({ id: row.id, ...JSON.parse(row.body) })));
+            const modifiedResponse = (fetchedData.map(row => ({ id: row.id, ...JSON.parse(row.body), status: row.status })));
             const data = {};
             data.response = {
                 fileId: file.id,
