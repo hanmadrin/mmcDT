@@ -3,6 +3,9 @@ const { File, User, Data } = require('../models');
 const ExpressError = require('../utilities/expressError');
 const { pdfToText } = require('../utilities/pdfToText');
 const { renameFile } = require('../utilities/renameFile');
+const { deleteFile } = require('../utilities/deleteFile');
+const { Op } = require("sequelize");
+const { asyncForEach } = require('../utilities/asyncForEach');
 
 module.exports.isPdfExists = async (req, res, next) => {
     try {
@@ -35,12 +38,13 @@ module.exports.parsePdf = async (req, res, next) => {
         if (response.error)
             throw new ExpressError(400, response.error);
 
-        renameFile(`./${req.file.path}`, `./${req.file.path}.pdf`);
+        // renameFile(`./${req.file.path}`, `./${req.file.path}.pdf`);
 
         response.originalName = req.file.originalname;
-
+        // delete file
+        deleteFile(`./${req.file.path}`);
         res.json({
-            file: `${req.file.path.replace('public/', '')}.pdf`,
+            // file: `${req.file.path.replace('public/', '')}.pdf`,
             response
         });
     } catch (err) {
@@ -151,6 +155,239 @@ module.exports.updateExtensionDataStatus = async (req, res, next) => {
         );
         if (!updatedData)
             throw new ExpressError(500, "Error updating data");
+
+        res.json({ message: "Data updated successfully" });
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.getFilesWithStatus = async (req, res, next) => {
+    const { page = 1, status, username, date, fileName } = req.query;
+
+    let rowCount = 0;
+    let dataConditions = {};
+    let userConditions = {};
+    let where = {};
+
+    if (status === 'completed') {
+        dataConditions = {
+            status: {
+                [Op.eq]: 'completed'
+            }
+        }
+    } else if (status === 'error') {
+        dataConditions = {
+            status: {
+                [Op.in]: ['error', 'fileError']
+            }
+        }
+    } else if (status === 'inQueue') {
+        dataConditions = {
+            status: {
+                [Op.is]: null,
+            }
+        }
+    } else if (status === 'processing') {
+        dataConditions = {
+            status: {
+                [Op.and]: {
+                    [Op.notIn]: ['completed', 'error', 'fileError'],
+                    [Op.not]: null
+                }
+            }
+        }
+    }
+
+    if (username) {
+        userConditions = {
+            username: {
+                [Op.like]: `%${username}%`
+            }
+        }
+    }
+
+    if (date) {
+        const timeString = new Date(date).getTime();
+        const nextDay = new Date(date).getTime() + 86400000;
+        where = {
+            time_string: {
+                [Op.between]: [timeString, nextDay]
+            }
+        };
+    }
+
+    if (fileName) {
+        where = {
+            ...where,
+            file_name: {
+                [Op.like]: `%${fileName}%`
+            }
+        };
+    }
+
+    let files = await File.findAndCountAll({
+        where,
+        include: [
+            {
+                model: Data,
+                attributes: ['id', 'status'],
+                where: {
+                    ...dataConditions,
+                },
+            },
+            {
+                model: User,
+                attributes: ['username'],
+                where: {
+                    ...userConditions,
+                },
+            }
+        ],
+        distinct: true,
+        limit: 10,
+        offset: (page - 1) * 10,
+    });
+
+    rowCount = files.count;
+    files = await File.findAll({
+        where: {
+            id: {
+                [Op.in]: files.rows.map(file => file.id)
+            }
+        },
+        include: [
+            {
+                model: Data,
+                attributes: ['id', 'status']
+            },
+            {
+                model: User,
+                attributes: ['username']
+            }
+        ],
+    });
+
+    files = files.map(file => {
+        const { Data, ...rest } = file.dataValues;
+        const status = [];
+        if (Data.length > 0) {
+            const errorStatus = Data.find(data => data.status === 'error' || data.status === 'fileError');
+            if (errorStatus) {
+                status.push('error');
+            }
+            const completedStatus = Data.find(data => data.status === 'completed');
+            if (completedStatus) {
+                status.push('completed');
+            }
+            const inQueueStatus = Data.find(data => data.status === null);
+            if (inQueueStatus) {
+                status.push('inQueue');
+            }
+            const processingStatus = Data.find(data => data.status !== 'completed' && data.status !== 'error' && data.status !== 'fileError' && data.status !== null);
+            if (processingStatus) {
+                status.push('processing');
+            }
+        }
+        else {
+            status.push('noDataFound');
+        }
+        return {
+            ...rest,
+            status,
+        };
+    });
+    res.json({
+        count: rowCount,
+        rows: files,
+    });
+};
+
+module.exports.getAllFileData = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const data = await Data.findAll({
+            where: {
+                file_id: id,
+            },
+            attributes: ['id', 'header', 'body', 'footer', 'status'],
+        });
+
+        res.json(data);
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.updatePdfData = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const {
+            header,
+            body,
+            footer,
+            deletedRows
+        } = req.body;
+
+        if (deletedRows.length) {
+            await asyncForEach(deletedRows, async (id, index) => {
+                const deletedData = await Data.destroy({
+                    where: {
+                        id: id,
+                    }
+                });
+                if (!deletedData)
+                    throw new ExpressError(500, "Error deleting data");
+            });
+        }
+
+        const filteredBody = body.filter(data => !deletedRows.includes(data.id));
+
+        const username = req.cookies.username;
+        const user = await User.findOne({
+            where: {
+                username,
+            },
+        });
+        if (!user)
+            throw new ExpressError(400, "Invalid username");
+
+        const updatedFile = await File.update(
+            {
+                user_id: user.id,
+                time_string: new Date().getTime(),
+            },
+            {
+                where: {
+                    id: id,
+                }
+            }
+        );
+
+        if (!updatedFile)
+            throw new ExpressError(500, "Error saving file");
+
+        if (filteredBody.length) {
+            await asyncForEach(filteredBody, async (data, index) => {
+                const updatedData = await Data.update(
+                    {
+                        header: JSON.stringify(header),
+                        body: JSON.stringify(data),
+                        footer: JSON.stringify(footer),
+                        status: data.status,
+                    },
+                    {
+                        where: {
+                            file_id: id,
+                            id: data.id,
+                        }
+                    }
+                );
+                if (!updatedData)
+                    throw new ExpressError(500, "Error saving data");
+            });
+        }
 
         res.json({ message: "Data updated successfully" });
     } catch (err) {

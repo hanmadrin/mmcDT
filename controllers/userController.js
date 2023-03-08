@@ -34,3 +34,26 @@ module.exports.logout = async (req, res, next) => {
         next(err);
     }
 };
+
+module.exports.isLoggedIn = async (req, res, next) => {
+    try {
+        const { username } = req.cookies;
+
+        if (!username)
+            throw new ExpressError(401, "Unauthorized");
+
+        const user = await User.scope('login').findOne({
+            where: {
+                username,
+                status: "active",
+            },
+        });
+
+        if (!user)
+            throw new ExpressError(401, "Unauthorized");
+
+        res.json(user);
+    } catch (err) {
+        next(err);
+    }
+};

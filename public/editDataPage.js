@@ -1,10 +1,23 @@
+import dashBoardPage from "./dashboardPage.js";
 import { loaderCircle, notify, popup } from "./library.js";
 import loginPage from "./loginPage.js";
 import uploadPdfPage from "./uploadPdfPage.js";
-const showDataPage = (data) => {
+const editDataPage = async (fileName, fileId) => {
+    const response = await fetch(`/api/datas/get-all-file-data/${fileId}`, {
+        method: 'GET',
+    });
+    const fetchedData = await response.json();
+    const modifiedResponse = (fetchedData.map(row => JSON.parse(row.body)));
+    const data = {};
+    data.response = {
+        fileName,
+        header: JSON.parse(fetchedData[0].header),
+        body: modifiedResponse,
+        footer: JSON.parse(fetchedData[0].footer),
+    };
     const body = document.querySelector('#main');
-    const showDataPage = document.createElement('div');
-    showDataPage.classList.add('show-data-page');
+    const editDataPage = document.createElement('div');
+    editDataPage.classList.add('show-data-page');
     const logoutButton = document.createElement('button');
     logoutButton.classList.add('logout-button');
     logoutButton.innerText = 'Logout';
@@ -14,11 +27,19 @@ const showDataPage = (data) => {
         });
         const data = await response.json();
         notify({ data: data.message, type: 'success' });
-        localStorage.setItem('currentPage', '0');
-        body.removeChild(showDataPage);
+        body.removeChild(editDataPage);
+        window.history.pushState({}, '', `/`);
         loginPage();
     };
     logoutButton.addEventListener('click', logout);
+    const dashboardButton = document.createElement('button');
+    dashboardButton.classList.add('dashboard-button');
+    dashboardButton.innerText = 'Dashboard';
+    dashboardButton.addEventListener('click', () => {
+        body.removeChild(editDataPage);
+        window.history.pushState({}, '', `/dashboard`);
+        dashBoardPage();
+    });
     const showDataContent = document.createElement('div');
     showDataContent.classList.add('show-data-content');
     const buttonDiv = document.createElement('div');
@@ -27,8 +48,8 @@ const showDataPage = (data) => {
     backButton.classList.add('back-button');
     backButton.innerText = 'Cancel';
     const backToUpload = () => {
-        body.removeChild(showDataPage);
-        uploadPdfPage();
+        body.removeChild(editDataPage);
+        dashBoardPage();
     };
     backButton.addEventListener('click', backToUpload);
     const confirmButton = document.createElement('button');
@@ -37,9 +58,10 @@ const showDataPage = (data) => {
     const confirmData = async () => {
         popup({
             state: true,
-            content: loaderCircle({size: '50'}),
-            options:{
+            content: loaderCircle({ size: '50' }),
+            options: {
                 removeButton: false,
+                backDropColor: 'rgba(0, 0, 0, 0)',
             }
         });
         const response = await fetch('/api/datas/save-pdf-data', {
@@ -56,7 +78,7 @@ const showDataPage = (data) => {
             return;
         }
         notify({ data: 'Uploaded successfully', type: 'success' });
-        body.removeChild(showDataPage);
+        body.removeChild(editDataPage);
         uploadPdfPage();
     };
     confirmButton.addEventListener('click', confirmData);
@@ -118,9 +140,10 @@ const showDataPage = (data) => {
     showDataContent.appendChild(showHeader);
     showDataContent.appendChild(showBody);
     showDataContent.appendChild(showFooter);
-    showDataPage.appendChild(showDataContent);
-    showDataPage.appendChild(logoutButton);
-    body.appendChild(showDataPage);
+    editDataPage.appendChild(showDataContent);
+    editDataPage.appendChild(logoutButton);
+    editDataPage.appendChild(dashboardButton);
+    body.appendChild(editDataPage);
 };
 
-export default showDataPage;
+export default editDataPage;

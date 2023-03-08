@@ -21,19 +21,20 @@ const loginPage = () => {
     loginFormButton.classList.add('login-form-button');
     loginFormButton.setAttribute('type', 'button');
     const verifyLogin = async () => {
-        popup({
-            state: true,
-            content: loaderCircle({ size: '50' }),
-            options: {
-                removeButton: false,
-            }
-        });
         const username = loginFormInput.value;
         const password = loginFormPassword.value;
         if (!username || !password) {
             notify({ data: 'Username and password are required', type: 'danger' });
             return;
         }
+        popup({
+            state: true,
+            content: loaderCircle({ size: '50' }),
+            options: {
+                removeButton: false,
+                backDropColor: 'rgba(0, 0, 0, 0)',
+            }
+        });
         try {
             const response = await fetch('/api/users/login', {
                 method: 'POST',
@@ -47,7 +48,7 @@ const loginPage = () => {
                 notify({ data, type: 'danger' });
                 return;
             }
-            localStorage.setItem('currentPage', '1');
+            window.history.pushState({}, '', `/upload`);
             body.removeChild(loginPage);
             uploadPdfPage();
         } catch (err) {
@@ -68,7 +69,7 @@ const loginPage = () => {
     loginForm.appendChild(loginFormPassword);
     loginForm.appendChild(loginFormButton);
     loginPage.appendChild(loginForm);
-    body.appendChild(loginPage);
+    body.replaceChildren(loginPage);
 };
 
 export default loginPage;
