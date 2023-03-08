@@ -3,7 +3,7 @@ const { File, User, Data } = require('../models');
 const ExpressError = require('../utilities/expressError');
 const { pdfToText } = require('../utilities/pdfToText');
 const { renameFile } = require('../utilities/renameFile');
-const {deleteFile} = require('../utilities/deleteFile');
+const { deleteFile } = require('../utilities/deleteFile');
 const { Op } = require("sequelize");
 
 module.exports.isPdfExists = async (req, res, next) => {
@@ -300,4 +300,21 @@ module.exports.getFilesWithStatus = async (req, res, next) => {
         count: rowCount,
         rows: files,
     });
+};
+
+module.exports.getAllFileData = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const data = await Data.findAll({
+            where: {
+                file_id: id,
+            },
+            attributes: ['id', 'header', 'body', 'footer', 'status'],
+        });
+
+        res.json(data);
+    } catch (err) {
+        next(err);
+    }
 };
