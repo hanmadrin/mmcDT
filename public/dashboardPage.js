@@ -1,3 +1,4 @@
+import editDataPage from "./editDataPage.js";
 import { loaderCircle, notify, popup } from "./library.js";
 import loginPage from "./loginPage.js";
 import uploadPdfPage from "./uploadPdfPage.js";
@@ -50,6 +51,14 @@ const getFilesWithStatus = async (dashBoardDataList) => {
     div.setAttribute('id', 'status-data');
     data.rows.forEach((file) => {
         const dashBoardData = document.createElement('div');
+        dashBoardData.addEventListener('click', () => {
+            const body = document.querySelector('#main');
+            //get the child element of body
+            const child = body.lastElementChild;
+            //remove the child element
+            body.removeChild(child);
+            editDataPage(file.file_name, file.id);
+        });
         dashBoardData.classList.add('dashboard-data');
         Object.keys(fileFields).forEach((key) => {
             const dashBoardDataField = document.createElement('p');
