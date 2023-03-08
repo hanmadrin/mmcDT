@@ -30,6 +30,7 @@ const getFilesWithStatus = async (dashBoardDataList) => {
         content: loaderCircle({ size: '50' }),
         options: {
             removeButton: false,
+            backDropColor: 'rgba(0,0,0,0)',
         }
     });
     const response =
@@ -142,7 +143,7 @@ const renderStatus = (dashBoardStatus, dashBoardDataList) => {
 }
 
 const dashBoardPage = async () => {
-    const body = document.querySelector('#main');
+    const main = document.querySelector('#main');
     const dashBoardPage = document.createElement('div');
     dashBoardPage.classList.add('dashboard-page');
     const logoutButton = document.createElement('button');
@@ -154,7 +155,7 @@ const dashBoardPage = async () => {
         });
         const data = await response.json();
         notify({ data: data.message, type: 'success' });
-        body.removeChild(dashBoardPage);
+        // body.removeChild(dashBoardPage);
         window.history.pushState({}, '', `/`);
         loginPage();
     };
@@ -163,7 +164,7 @@ const dashBoardPage = async () => {
     uploadButton.classList.add('upload-button');
     uploadButton.innerText = 'Upload';
     uploadButton.addEventListener('click', () => {
-        body.removeChild(dashBoardPage);
+        // body.removeChild(dashBoardPage);
         window.history.pushState({}, '', `/upload`);
         uploadPdfPage();
     });
@@ -245,7 +246,7 @@ const dashBoardPage = async () => {
     dashBoardPage.appendChild(dashBoardContent);
     dashBoardPage.appendChild(logoutButton);
     dashBoardPage.appendChild(uploadButton);
-    body.appendChild(dashBoardPage);
+    main.replaceChildren(dashBoardPage);
 };
 
 export default dashBoardPage;
