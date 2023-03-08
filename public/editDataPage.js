@@ -49,7 +49,7 @@ const editDataPage = async (fileName, fileId) => {
     backButton.innerText = 'Cancel';
     const backToUpload = () => {
         body.removeChild(editDataPage);
-        uploadPdfPage();
+        dashBoardPage();
     };
     backButton.addEventListener('click', backToUpload);
     const confirmButton = document.createElement('button');
