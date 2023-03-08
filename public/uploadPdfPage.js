@@ -71,7 +71,6 @@ const uploadPdfPage = () => {
                                 options: {
                                     removeButton: false,
                                     backDropColor: 'rgba(0, 0, 0, 0)',
-
                                 }
                             });
                             try {
@@ -91,14 +90,14 @@ const uploadPdfPage = () => {
                                 // body.removeChild(uploadPdfPage);
                                 popup({
                                     state: true,
-                                    content: showDataPopup(data),
+                                    content: showDataPopup(data, 'show'),
                                     options: {
                                         removeButton: false,
                                         backDrop: false,
                                         backDropColor: 'rgba(0,0,0,0.75)',
                                     }
                                 });
-                                
+
                             } catch (error) {
                                 notify({ data: error, type: 'danger' });
                             } finally {
@@ -139,12 +138,21 @@ const uploadPdfPage = () => {
                         notify({ data, type: 'danger' })
                         return;
                     }
+                    popup({ state: false });
                     // body.removeChild(uploadPdfPage);
-                    showDataPage(data);
+                    // showDataPage(data);
+                    popup({
+                        state: true,
+                        content: showDataPopup(data, 'show'),
+                        options: {
+                            removeButton: false,
+                            backDrop: false,
+                            backDropColor: 'rgba(0,0,0,0.75)',
+                        }
+                    });
                 } catch (error) {
                     notify({ data: error, type: 'danger' });
                 } finally {
-                    popup({ state: false });
                 }
             }
         } catch (error) {
