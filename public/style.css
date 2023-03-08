@@ -106,8 +106,8 @@
 }
 
 /* show data page */
-.show-data-page {
-  width: 70%;
+.show-data-popup {
+  /* width: 70%; */
   margin: 35px auto;
 }
 
@@ -118,7 +118,7 @@
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
 
-.show-data-page-title {
+.show-data-popup-title {
   font-size: 30px;
   margin-bottom: 30px;
 }
@@ -680,6 +680,13 @@ body {
 }
 
 
+.hide-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scroll-bar{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
 .transform-scale-1 {
   transform: scale(1)
 }

@@ -110,7 +110,7 @@ const popup = ({ state, content, options = { backDrop: true, removeButton: true,
         popup.style.backgroundColor = options.backDropColor;
         const popupContent = document.createElement('div');
         popupContent.append(content);
-        popupContent.classList = 'position-relative';
+        popupContent.classList = 'position-relative overflow-y-auto hide-scroll-bar';
         popup.append(popupContent);
         if (options.removeButton) {
             const crossButtonHolder = document.createElement('div');

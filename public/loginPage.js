@@ -69,7 +69,7 @@ const loginPage = () => {
     loginForm.appendChild(loginFormPassword);
     loginForm.appendChild(loginFormButton);
     loginPage.appendChild(loginForm);
-    body.appendChild(loginPage);
+    body.replaceChildren(loginPage);
 };
 
 export default loginPage;
