@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { File, User, Data } = require('../models');
+const { File, User, Data, Meta } = require('../models');
 const ExpressError = require('../utilities/expressError');
 const { pdfToText } = require('../utilities/pdfToText');
 const { renameFile } = require('../utilities/renameFile');
@@ -112,8 +112,42 @@ module.exports.savePdfData = async (req, res, next) => {
 
 module.exports.getExtensionData = async (req, res, next) => {
     try {
-        const { processedBy } = req.query;
-
+        const { deviceId } = req.body;
+        if(!deviceId){
+            res.json({
+                action: 'settingError',
+                message: 'Device id is required',
+            });
+            return;
+        }
+        const extensionSwitch = await Meta.findOne({
+            where: {
+                key: 'extensionSwitch',
+            }
+        });
+        if (!extensionSwitch){
+            res.json({
+                action: 'settingError',
+                message: "Extension switch doesn't exists"
+            });
+            return;
+        }
+        const isExtensionSwitchOn = extensionSwitch.value === 'on';
+        if(!isExtensionSwitchOn){
+            res.json({
+                action: 'tryAgainLater',
+                message: 'The extension is currently turned off',
+            });
+            return;
+        }
+        const currentUSHour = new Date(new Date().toLocaleString("en-US", {timeZone: "America/New_York"})).getHours(); 
+        // if(currentUSHour < 9 || currentUSHour > 17){
+        //     res.json({
+        //         action: 'tryAgainLater',
+        //         message: 'The extension is only available between 9am and 5pm EST',
+        //     });
+        //     return;
+        // }
         const latestData = await Data.findOne({
             where: {
                 status: null,
@@ -128,12 +162,20 @@ module.exports.getExtensionData = async (req, res, next) => {
                 ['id', 'ASC']
             ],
         });
-        if (!latestData)
-            throw new ExpressError(400, "No data available");
-
-        latestData.status = processedBy;
+        if (!latestData){
+            res.json({
+                action: 'tryAgainLater',
+                message: 'No data available to work on',
+            });
+            return;
+        }
+        
+        latestData.status = deviceId;
         await latestData.save();
-        res.json(latestData);
+        res.json({
+            action: 'workOnItem',
+            item: latestData,
+        });
     } catch (err) {
         next(err);
     }
@@ -141,15 +183,15 @@ module.exports.getExtensionData = async (req, res, next) => {
 
 module.exports.updateExtensionDataStatus = async (req, res, next) => {
     try {
-        const { dataId } = req.params;
+        const { id,status } = req.body;
 
         const updatedData = await Data.update(
             {
-                status: 'completed'
+                status: status
             },
             {
                 where: {
-                    id: dataId,
+                    id: id,
                 },
             }
         );
@@ -208,8 +250,8 @@ module.exports.getFilesWithStatus = async (req, res, next) => {
     }
 
     if (date) {
-        const timeString = new Date(date).getTime();
-        const nextDay = new Date(date).getTime() + 86400000;
+        const timeString = new Date(date).setHours(0);
+        const nextDay = new Date(date).setHours(0) + 86400000;
         where = {
             time_string: {
                 [Op.between]: [timeString, nextDay]
@@ -375,7 +417,7 @@ module.exports.updatePdfData = async (req, res, next) => {
                         header: JSON.stringify(header),
                         body: JSON.stringify(data),
                         footer: JSON.stringify(footer),
-                        status: data.status,
+                        status: data.status=='inQueue' ? null : data.status,
                     },
                     {
                         where: {
