@@ -1,6 +1,7 @@
 const Data = require('./data');
 const User = require('./user');
 const File = require('./file');
+const Meta = require('./meta');
 
 User.hasMany(File, { foreignKey: 'user_id' });
 File.belongsTo(User, { foreignKey: 'user_id' });
@@ -12,5 +13,6 @@ module.exports = {
     Data,
     User,
     File,
+    Meta
 };
 

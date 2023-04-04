@@ -2,33 +2,34 @@ import showDataPopup from './showDataPopup.js';
 import loginPage from './loginPage.js';
 import { notify, popup, confirmationPopup, loaderCircle } from './library.js';
 import dashBoardPage from './dashboardPage.js';
+import { menuBar } from './menuBar.js';
 
 const uploadPdfPage = () => {
     const main = document.querySelector('#main');
     const uploadPdfPage = document.createElement('div');
     uploadPdfPage.classList.add('upload-pdf-page');
-    const logoutButton = document.createElement('button');
-    logoutButton.classList.add('logout-button');
-    logoutButton.innerText = 'Logout';
-    const logout = async () => {
-        const response = await fetch('/api/users/logout', {
-            method: 'GET',
-        });
-        const data = await response.json();
-        notify({ data: data.message, type: 'success' });
-        // body.removeChild(uploadPdfPage);
-        window.history.pushState({}, '', `/`);
-        loginPage();
-    };
-    logoutButton.addEventListener('click', logout);
-    const dashboardButton = document.createElement('button');
-    dashboardButton.classList.add('dashboard-button');
-    dashboardButton.innerText = 'Dashboard';
-    dashboardButton.addEventListener('click', () => {
-        // body.removeChild(uploadPdfPage);
-        window.history.pushState({}, '', `/dashboard`);
-        dashBoardPage();
-    });
+    // const logoutButton = document.createElement('button');
+    // logoutButton.classList.add('logout-button');
+    // logoutButton.innerText = 'Logout';
+    // const logout = async () => {
+    //     const response = await fetch('/api/users/logout', {
+    //         method: 'GET',
+    //     });
+    //     const data = await response.json();
+    //     notify({ data: data.message, type: 'success' });
+    //     // body.removeChild(uploadPdfPage);
+    //     window.history.pushState({}, '', `/`);
+    //     loginPage();
+    // };
+    // logoutButton.addEventListener('click', logout);
+    // const dashboardButton = document.createElement('button');
+    // dashboardButton.classList.add('dashboard-button');
+    // dashboardButton.innerText = 'Dashboard';
+    // dashboardButton.addEventListener('click', () => {
+    //     // body.removeChild(uploadPdfPage);
+    //     window.history.pushState({}, '', `/dashboard`);
+    //     dashBoardPage();
+    // });
     const uploadPdfForm = document.createElement('form');
     uploadPdfForm.classList.add('upload-pdf-form');
     const uploadPdfFormTitle = document.createElement('h1');
@@ -43,6 +44,38 @@ const uploadPdfPage = () => {
     const verifyUploadPdf = async () => {
         const formData = new FormData();
         formData.append('pdf', uploadPdfFormInput.files[0]);
+        // name format verification
+        // 8000000_UGR0981.pdf
+        let name = uploadPdfFormInput.files[0].name;
+        if (!name) {
+            notify({ data: 'Select a file', type: 'danger' });
+            return;
+        }
+        if(!name.endsWith('.pdf')){
+            notify({ data: 'Invalid file type.', type: 'danger' });
+            return;
+        }
+        name = name.replace('.pdf', '');
+        const nameArray = name.split('_');
+        if (nameArray.length != 3) {
+            notify({ data: 'Invalid file name. There will be 3 data section', type: 'danger' });
+            return;
+        }
+        const nameArray1 = nameArray[0].split('');
+        if (nameArray1.length != 7) {
+            notify({ data: 'Invalid file name', type: 'danger' });
+            return;
+        }
+        // allowed characters A-Z,0-9. verify with regex by replacing
+        // const nonAllowedCharacters = nameArray[1].replace(/[A-Z0-9]/g, '');
+        // if (nonAllowedCharacters.length > 0) {
+        //     notify({ data: 'Invalid file name', type: 'danger' });
+        //     return;
+        // }
+
+
+
+
         try {
             popup({
                 state: true,
@@ -183,8 +216,9 @@ const uploadPdfPage = () => {
     uploadPdfForm.appendChild(uploadPdfFormInput);
     uploadPdfForm.appendChild(uploadIcon);
     uploadPdfPage.appendChild(uploadPdfForm);
-    uploadPdfPage.appendChild(logoutButton);
-    uploadPdfPage.appendChild(dashboardButton);
+    // uploadPdfPage.appendChild(logoutButton);
+    // uploadPdfPage.appendChild(dashboardButton);
+    uploadPdfPage.appendChild(menuBar());
     main.replaceChildren(uploadPdfPage);
 };
 

@@ -3,7 +3,7 @@ import { loaderCircle, notify, popup } from "./library.js";
 import loginPage from "./loginPage.js";
 import showDataPopup from "./showDataPopup.js";
 import uploadPdfPage from "./uploadPdfPage.js";
-
+import { menuBar } from "./menuBar.js";
 const fileFields = {
     file_name: 'File Name',
     time_string: 'Upload Time',
@@ -168,32 +168,32 @@ const renderStatus = (dashBoardStatus, dashBoardDataList) => {
     });
 }
 
-const dashBoardPage = async () => {
+const dashBoardPage = () => {
     const main = document.querySelector('#main');
     const dashBoardPage = document.createElement('div');
     dashBoardPage.classList.add('dashboard-page');
-    const logoutButton = document.createElement('button');
-    logoutButton.classList.add('logout-button');
-    logoutButton.innerText = 'Logout';
-    const logout = async () => {
-        const response = await fetch('/api/users/logout', {
-            method: 'GET',
-        });
-        const data = await response.json();
-        notify({ data: data.message, type: 'success' });
-        // body.removeChild(dashBoardPage);
-        window.history.pushState({}, '', `/`);
-        loginPage();
-    };
-    logoutButton.addEventListener('click', logout);
-    const uploadButton = document.createElement('button');
-    uploadButton.classList.add('upload-button');
-    uploadButton.innerText = 'Upload';
-    uploadButton.addEventListener('click', () => {
-        // body.removeChild(dashBoardPage);
-        window.history.pushState({}, '', `/upload`);
-        uploadPdfPage();
-    });
+    // const logoutButton = document.createElement('button');
+    // logoutButton.classList.add('logout-button');
+    // logoutButton.innerText = 'Logout';
+    // const logout = async () => {
+    //     const response = await fetch('/api/users/logout', {
+    //         method: 'GET',
+    //     });
+    //     const data = await response.json();
+    //     notify({ data: data.message, type: 'success' });
+    //     // body.removeChild(dashBoardPage);
+    //     window.history.pushState({}, '', `/`);
+    //     loginPage();
+    // };
+    // logoutButton.addEventListener('click', logout);
+    // const uploadButton = document.createElement('button');
+    // uploadButton.classList.add('upload-button');
+    // uploadButton.innerText = 'Upload';
+    // uploadButton.addEventListener('click', () => {
+    //     // body.removeChild(dashBoardPage);
+    //     window.history.pushState({}, '', `/upload`);
+    //     uploadPdfPage();
+    // });
     const dashBoardContent = document.createElement('div');
     dashBoardContent.classList.add('dashboard-content');
     const dashBoardHeader = document.createElement('div');
@@ -269,9 +269,11 @@ const dashBoardPage = async () => {
     getFilesWithStatus(dashBoardDataList);
     dashBoardBody.appendChild(dashBoardDataList);
     dashBoardContent.appendChild(dashBoardBody);
+    dashBoardPage.appendChild(menuBar());
     dashBoardPage.appendChild(dashBoardContent);
-    dashBoardPage.appendChild(logoutButton);
-    dashBoardPage.appendChild(uploadButton);
+    // dashBoardPage.appendChild(logoutButton);
+    // dashBoardPage.appendChild(uploadButton);
+    
     main.replaceChildren(dashBoardPage);
 };
 
