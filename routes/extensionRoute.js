@@ -44,4 +44,15 @@ router.post('/is-last-of-file', async (req, res) => {
     }
     res.json({ isLastOne: countNotCompleted==1 });
 });
+router.post('/is-first-of-file', async (req, res) => {
+    const { file_id } = req.body;
+    const countCompleted = await Data.count({
+        where: {
+            file_id,
+            status: 'completed'
+        },
+    });
+    res.json({ isFirstOne: countCompleted==0 });
+    // res.json({ isFirstOne: true })
+});
 module.exports = router;
