@@ -298,9 +298,6 @@ module.exports.getFilesWithStatus = async (req, res, next) => {
                 [Op.in]: files.rows.map(file => file.id)
             },
         },
-        order: [
-            ['id', 'DESC']
-        ],
         include: [
             {
                 model: Data,
