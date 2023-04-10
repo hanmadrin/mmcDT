@@ -354,6 +354,9 @@ module.exports.getAllFileData = async (req, res, next) => {
                 file_id: id,
             },
             attributes: ['id', 'header', 'body', 'footer', 'status'],
+            order: [
+                ['id', 'DESC']
+            ],
         });
 
         res.json(data);
