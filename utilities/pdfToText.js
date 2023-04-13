@@ -106,7 +106,7 @@ module.exports.pdfToText = async (pdfPath) => {
             //         17   Bumper w/o Iron Man pkg w/fog lamps
             // 86510J9000    OEM    275.38    275.38    1    275.38    232.55    15.6    232.55
             // regex
-            const bodyLineRegex = /([\d-]){1,3}[\s@]{2,4}([A-z\s,/()-]{5,})\n(\w+)[@\s]{3,4}([\w\s]+)@@@([\d,.]+)@@@[-\d.,]+@@@([\d,.]+)@@@([\d,.]+)@@@([\d,.]+)@@@([\d,.]+)@@@([\d,.]+)\n/g;
+            const bodyLineRegex = /([\d-]){1,3}[\s@]{2,4}([A-z\s,/()\&-]{5,})\n([~\w]+)[@\s]{3,4}([\w\s]+)@@@([\d,.]+)@@@[-\d.,]+@@@([\d,.]+)@@@([\d,.]+)@@@([\d,.]+)@@@([\d,.-]+)@@@([\d,.]+)\n/g;
             const bodyLines = fileData.match(bodyLineRegex);
             // create body object
             // console.log(bodyLines.length)
@@ -116,7 +116,7 @@ module.exports.pdfToText = async (pdfPath) => {
                 const firstLine = line.split('\n')[0];
                 let secondLine = line.split('\n')[1];
                 result['Line'] = firstLine.match(/([\d-]){1,3}/)[0];
-                result['Description'] = firstLine.match(/([A-z,\s()-/]{5,})/)[0].trim();
+                result['Description'] = firstLine.match(/([A-z,\s()\&-/]{5,})/)[0].trim();
                 result['Description'] = result['Description'].replace(/--/g,'').trim();
                 // replace "    " with "@@@" to split
                 secondLine = secondLine.replace(/\s{3,}/g,'@@@');

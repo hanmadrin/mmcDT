@@ -223,6 +223,7 @@ const dashBoardPage = () => {
             const dashBoardSearch = document.createElement('input');
             dashBoardSearch.setAttribute('type', 'text');
             dashBoardSearch.setAttribute('placeholder', 'Search');
+            dashBoardSearch.value = filterFields.username;
             dashBoardSearch.classList.add('dashboard-search');
             dashBoardSearch.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
@@ -238,6 +239,7 @@ const dashBoardPage = () => {
             dashBoardDataField.classList.add('time-header');
             const datePicker = document.createElement('input');
             datePicker.setAttribute('type', 'date');
+            datePicker.value = filterFields.date;
             datePicker.classList.add('date-picker');
             datePicker.addEventListener('change', (e) => {
                 filterFields.date = e.target.value;
@@ -252,6 +254,7 @@ const dashBoardPage = () => {
             const dashBoardSearch = document.createElement('input');
             dashBoardSearch.setAttribute('type', 'text');
             dashBoardSearch.setAttribute('placeholder', 'Search');
+            dashBoardSearch.value = filterFields.fileName;
             dashBoardSearch.classList.add('dashboard-search');
             dashBoardSearch.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {

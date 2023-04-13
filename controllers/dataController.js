@@ -308,6 +308,9 @@ module.exports.getFilesWithStatus = async (req, res, next) => {
                 attributes: ['username']
             }
         ],
+        order: [
+            ['id', 'DESC']
+        ],
     });
 
     files = files.map(file => {
