@@ -285,6 +285,10 @@ module.exports.getFilesWithStatus = async (req, res, next) => {
                     ...userConditions,
                 },
             }
+
+        ],
+        order: [
+            ['id', 'DESC']
         ],
         distinct: true,
         limit: 10,
