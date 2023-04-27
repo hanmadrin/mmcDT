@@ -163,11 +163,12 @@ const uploadPdfPage = () => {
                         body: formData
                     });
                     const data = await response.json();
-                    if (response.status === 401) {
+                    if (response.status === 401 ) {
                         window.history.pushState({}, '', `/`);
                         // body.removeChild(uploadPdfPage);
                         loginPage();
                     } else if (response.status !== 200) {
+                        popup({ state: false });
                         notify({ data, type: 'danger' })
                         return;
                     }
