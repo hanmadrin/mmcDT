@@ -144,7 +144,7 @@ module.exports.getExtensionData = async (req, res, next) => {
             return;
         }
         const currentUSHour = new Date(new Date().toLocaleString("en-US", {timeZone: "America/New_York"})).getHours(); 
-        if(currentUSHour < 9 || currentUSHour > 19){
+        if(currentUSHour < 9 || currentUSHour > 17){
             res.json({
                 action: 'tryAgainLater',
                 message: 'The extension is only available between 9am and 5pm EST',
