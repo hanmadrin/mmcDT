@@ -15,7 +15,7 @@ router.post('/get-switch-status', async (req, res) => {
             key: 'extensionSwitch'
         }
     });
-    console.log(extensionSwitch)
+    // console.log(extensionSwitch)
     res.json({ extensionSwitch: extensionSwitch.value=='on'?true:false });
 });
 router.post('/set-switch-status', async (req, res) => {

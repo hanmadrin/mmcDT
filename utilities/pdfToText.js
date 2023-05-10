@@ -45,10 +45,10 @@ module.exports.pdfToText = async (pdfPath) => {
 
 
         let fileData = data.text;
-        fs.writeFile('test.txt', fileData, (err) => {
-            if (err) throw err;
-            console.log('The file has been saved!');
-        });
+        // fs.writeFile('test.txt', fileData, (err) => {
+        //     if (err) throw err;
+        //     console.log('The file has been saved!');
+        // });
         fileData = fileData.replace(/(\d{1,2}\/\d{1,2}\/\d{4}\s\d{1,2}:\d{1,2}:\d{1,2}\s[A|P]M)@@@Page\s\d{1,2}\n\n\nMATTHEWS MOTOR COMPANY\n/g,'');
         const header = (() => {
             const headerContentStructure = [
@@ -140,7 +140,7 @@ module.exports.pdfToText = async (pdfPath) => {
                     secondLine = splitLines[1];
                 }
                 const result = {};
-                console.log(firstLine)
+                // console.log(firstLine)
                 result['Line'] = firstLine.match(/([\d-]){1,3}/)[0];
                 firstLine = firstLine.replace(/([\d-]){1,3}/,'').trim();
                 result['Description'] = firstLine.match(/([A-z\s,/()"'.0-9\&-]{4,})/)[0].trim();
@@ -249,7 +249,7 @@ module.exports.pdfToText = async (pdfPath) => {
         // });
 
     } catch (e) {
-        console.log(e)
+        // console.log(e)
         throw new ExpressError(400, e.message);
     }
 };
