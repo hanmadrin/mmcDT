@@ -1,0 +1,29 @@
+
+
+
+MATTHEWS MOTOR COMPANY
+Vendor Invoice (Completed)
+Invoice Number:@@@10437-1 (Completed)@@@Invoice Date:@@@4/24/2023
+Vendor:@@@Blaise Alexander CDJRF (UBLAISE15)@@@RO Number:@@@10278
+6801 Westbranch Hwy.
+Lewisburg, PA 17837@@@Discount %:@@@25.0
+Phone:@@@(570) 523-1256@@@Payment Type:@@@On Account
+Fax:@@@Check/Auth. Number:
+Line   Part Number   Part Type@@@RO List $  RO Sales $  Received
+Qty
+Invoice
+List $
+Unit Cost
+$
+Discount
+%
+Extended
+Cost $
+18   Shield
+5182345AE@@@OEM@@@49.85@@@49.85@@@1@@@49.85@@@37.39@@@25.0@@@37.39
+Received Items:@@@1
+Subtotal:@@@37.39
+Tax:@@@0.00
+Freight:@@@0.00
+Grand Total:@@@$37.39
+4/24/2023 1:04:21 PM@@@Page 1

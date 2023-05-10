@@ -45,10 +45,10 @@ module.exports.pdfToText = async (pdfPath) => {
 
 
         let fileData = data.text;
-        // fs.writeFile('test.txt', fileData, (err) => {
-        //     if (err) throw err;
-        //     console.log('The file has been saved!');
-        // });
+        fs.writeFile('test.txt', fileData, (err) => {
+            if (err) throw err;
+            console.log('The file has been saved!');
+        });
         fileData = fileData.replace(/(\d{1,2}\/\d{1,2}\/\d{4}\s\d{1,2}:\d{1,2}:\d{1,2}\s[A|P]M)@@@Page\s\d{1,2}\n\n\nMATTHEWS MOTOR COMPANY\n/g,'');
         const header = (() => {
             const headerContentStructure = [
@@ -110,7 +110,7 @@ module.exports.pdfToText = async (pdfPath) => {
             //         17   Bumper w/o Iron Man pkg w/fog lamps
             // 86510J9000    OEM    275.38    275.38    1    275.38    232.55    15.6    232.55
             // regex
-            const bodyLineRegex = /([\d-]){1,3}[\s@]{2,4}([A-z\s,/()"'.0-9\&-]{5,})\n([~\w]+)[@\s]{2,4}([\w\s]+)[@\s]{2,4}([\d,.]+)[@\s]{2,4}[-\d.,]+[@\s]{2,4}([\d,.]+)[@\s]{2,4}([\d,.]+)[@\s]{2,4}([\d,.]+)[@\s]{2,4}([\d,.-]+)[@\s]{2,4}([\d,.]+)\n/g;
+            const bodyLineRegex = /([\d-]){1,3}[\s@]{2,4}([A-z\s,/()"'.0-9\&-]{4,})\n([~\w]+)(([@\s]{2,4})|\n)([\w\s]+)[@\s]{2,4}([\d,.]+)[@\s]{2,4}[-\d.,]+[@\s]{2,4}([\d,.]+)[@\s]{2,4}([\d,.]+)[@\s]{2,4}([\d,.]+)[@\s]{2,4}([\d,.-]+)[@\s]{2,4}([\d,.]+)\n/g;
             const bodyLines = fileData.match(bodyLineRegex);
             // create body object
             // console.log(bodyLines.length)
@@ -119,13 +119,31 @@ module.exports.pdfToText = async (pdfPath) => {
             }
             const bodyObject = [];
             bodyLines.forEach((line)=>{
-                // console.log(line)
+                // console.log(line);
+                line = line.trim();
+                let firstLine='', secondLine='';
+                const splitLines = line.split('\n');
+                // console.log(splitLines)
+                const splitLinesLength = splitLines.length;
+                if(splitLinesLength>2){
+                    firstLine = splitLines[0];
+                    for(let i=1;i<splitLinesLength;i++){
+                        if(i==splitLinesLength-1){
+                            secondLine+= '   ';
+                            secondLine+=splitLines[i];
+                        }else{
+                            secondLine+=splitLines[i];
+                        }
+                    }
+                }else{
+                    firstLine = splitLines[0];
+                    secondLine = splitLines[1];
+                }
                 const result = {};
-                let firstLine = line.split('\n')[0];
-                let secondLine = line.split('\n')[1];
+                console.log(firstLine)
                 result['Line'] = firstLine.match(/([\d-]){1,3}/)[0];
                 firstLine = firstLine.replace(/([\d-]){1,3}/,'').trim();
-                result['Description'] = firstLine.match(/([A-z\s,/()"'.0-9\&-]{5,})/)[0].trim();
+                result['Description'] = firstLine.match(/([A-z\s,/()"'.0-9\&-]{4,})/)[0].trim();
                 result['Description'] = result['Description'].replace(/--/g,'').trim();
                 // replace "    " with "@@@" to split
                 secondLine = secondLine.replace(/\s{2,4}/g,'@@@');
@@ -183,7 +201,7 @@ module.exports.pdfToText = async (pdfPath) => {
             return footerObject;
 
         })();
-        console.log(body);
+        // console.log(body);
         const jsonData = {
             header,
             body,
@@ -231,6 +249,7 @@ module.exports.pdfToText = async (pdfPath) => {
         // });
 
     } catch (e) {
+        console.log(e)
         throw new ExpressError(400, e.message);
     }
 };
