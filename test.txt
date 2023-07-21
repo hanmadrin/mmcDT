@@ -3,14 +3,14 @@
 
 MATTHEWS MOTOR COMPANY
 Vendor Invoice (Completed)
-Invoice Number:@@@137097T (Completed)@@@Invoice Date:@@@7/12/2023
-Vendor:@@@Maguire Kia Volvo Audi (UMAGU003)@@@RO Number:@@@10406
-370 Elmira Rd
-Ithaca, NY 14850@@@Discount %:@@@20.0
-Phone:@@@(607) 257-1515@@@Payment Type:@@@On Account
-Fax:@@@(607) 257-4676@@@Check/Auth. Number:
-Insurance:@@@ERIE INSURANCE GROUP
-Claim Number:@@@A00005054023-1
+Invoice Number:@@@10601 (Completed)@@@Invoice Date:@@@5/2/2023
+Vendor:@@@Blaise Alexander CDJRF (UBLAISE15)@@@RO Number:@@@10229
+6801 Westbranch Hwy.
+Lewisburg, PA 17837@@@Discount %:@@@25.0
+Phone:@@@(570) 523-1256@@@Payment Type:@@@On Account
+Fax:@@@Check/Auth. Number:
+Insurance:@@@NATIONWIDE GENERAL INS.
+Claim Number:@@@231309-GO-1
 Line   Part Number   Part Type@@@RO List $  RO Sales $  Received
 Qty
 Invoice
@@ -21,55 +21,21 @@ Discount
 %
 Extended
 Cost $
-17   Emission label 2.0L Federal
-324022EYB3@@@OEM@@@5.35@@@5.35@@@1@@@5.35@@@4.28@@@20.0@@@4.28
-18   AC label
-97699A7100@@@OEM@@@6.97@@@6.97@@@1@@@6.97@@@5.58@@@19.9@@@5.58
-21   Bumper cover w/o prk assist
-86511-A7200@@@Aftermarket@@@314.00@@@314.00@@@1@@@397.70@@@219.53@@@44.8@@@219.53
-28   Filler strip
-86357A7001@@@OEM@@@27.37@@@27.37@@@1@@@27.37@@@21.90@@@20.0@@@21.90
-29   Absorber EX
-86520A7260@@@Opt OEM@@@68.88@@@68.88@@@1@@@90.28@@@49.42@@@45.3@@@49.42
-30   RT Fog lamp bezel w/o LED ring fog lmp
-86564A7200@@@OEM@@@45.84@@@45.84@@@1@@@45.84@@@36.67@@@20.0@@@36.67
-31   RT Upper retainer
-86518A7000@@@Opt OEM@@@22.47@@@22.47@@@1@@@25.22@@@13.92@@@44.8@@@13.92
-33   RT Side bracket
-86514A7000@@@Opt OEM@@@16.81@@@16.81@@@1@@@18.92@@@10.44@@@44.8@@@10.44
-35   Upper grille
-86350A7200@@@Opt OEM@@@123.00@@@153.75@@@1@@@194.34@@@115.31@@@40.7@@@115.31
-36   Lower grille
-86522A7200@@@OEM@@@87.44@@@87.44@@@1@@@87.44@@@69.95@@@20.0@@@69.95
-38   Lower deflector EX
-86590A7100@@@OEM@@@45.00@@@45.00@@@1@@@45.00@@@17.48@@@61.2@@@17.48
-40   RT Headlamp assy
-KI2503171R@@@Opt OEM@@@722.00@@@722.00@@@1@@@783.98@@@432.76@@@44.8@@@432.76
-42   RT Fog lamp assy w/o LED ring
-~337066788@@@LKQ@@@95.00@@@118.75@@@1@@@183.69@@@89.06@@@51.5@@@89.06
-45   Radiator support
-64101A7001@@@Opt OEM@@@468.50@@@468.50@@@1@@@523.63@@@289.05@@@44.8@@@289.05
-48   Sight shield 2.0L
-86356A7200@@@Opt OEM@@@27.00@@@27.00@@@1@@@31.69@@@17.78@@@43.9@@@17.78
-49   LT Splash shield
-29130A7000@@@OEM@@@21.85@@@21.85@@@1@@@21.85@@@17.48@@@20.0@@@17.48
-50   Under cover
-29110A7000@@@OEM@@@34.64@@@34.64@@@1@@@34.64@@@27.71@@@20.0@@@27.71
-53   RT Air guide
-29134A7000@@@OEM@@@19.32@@@19.32@@@1@@@19.32@@@15.46@@@20.0@@@15.46
-59   hood
-66400A7000@@@Opt OEM@@@375.00@@@468.75@@@1@@@715.25@@@351.56@@@50.8@@@351.56
-66   RT Hinge
-79120A7600@@@OEM@@@44.17@@@44.17@@@1@@@44.17@@@35.34@@@20.0@@@35.34
-72   RT Fender w/o black mldg
-66321A7210@@@OEM@@@228.27@@@228.27@@@1@@@228.27@@@182.62@@@20.0@@@182.62
-76   RT Fender liner coupe
-86812A7200@@@Opt OEM@@@72.60@@@72.60@@@1@@@79.27@@@43.76@@@44.8@@@43.76
-85   Reservoir assy coupe
-98610A7010@@@OEM@@@101.42@@@101.42@@@1@@@101.42@@@81.14@@@20.0@@@81.14
-Received Items:@@@23
-Subtotal:@@@2,148.20
+4@@@Emission label
+68190201@@@OEM@@@1.00@@@1.00@@@1@@@10.95@@@8.21@@@25.0@@@8.21
+14   RT Bracket
+68223470AA@@@OEM@@@65.50@@@65.50@@@1@@@65.50@@@49.13@@@25.0@@@49.13
+46   LT Support bracket
+68223399@@@OEM@@@212.32@@@212.32@@@1@@@276.00@@@133.65@@@51.6@@@133.65
+52   LT Air baffle
+68223548@@@OEM@@@16.25@@@16.25@@@1@@@47.00@@@35.25@@@25.0@@@35.25
+102   High note horn
+68386896AA@@@OEM@@@97.40@@@97.40@@@1@@@97.40@@@73.05@@@25.0@@@73.05
+103   Low note horn
+68386895AA@@@OEM@@@38.70@@@38.70@@@1@@@38.70@@@29.03@@@25.0@@@29.03
+Received Items:@@@6
+Subtotal:@@@328.32
 Tax:@@@0.00
 Freight:@@@0.00
-Grand Total:@@@$2,148.20
-7/12/2023 1:11:26 PM@@@Page 2
+Grand Total:@@@$328.32
+5/2/2023 12:57:59 PM@@@Page 1
