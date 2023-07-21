@@ -50,7 +50,7 @@ module.exports.pdfToText = async (pdfPath) => {
         //     console.log('The file has been saved!');
         // });
         fileData = fileData.replace(/(\d{1,2}\/\d{1,2}\/\d{4}\s\d{1,2}:\d{1,2}:\d{1,2}\s[A|P]M)@@@Page\s\d{1,2}\n\n\nMATTHEWS MOTOR COMPANY\n/g,'');
-        fs.writeFileSync('test.txt', fileData);
+        // fs.writeFileSync('test.txt', fileData);
         const header = (() => {
             const headerContentStructure = [
                 {
@@ -111,7 +111,7 @@ module.exports.pdfToText = async (pdfPath) => {
             //         17   Bumper w/o Iron Man pkg w/fog lamps
             // 86510J9000    OEM    275.38    275.38    1    275.38    232.55    15.6    232.55
             // regex
-            const bodyLineRegex = /([\d-]){1,3}[\s@]{2,4}([A-z\s,/()"'.0-9\&-]{4,})\n([~-\w\/]+)(([@\s]{2,4})|\n)([\w\s-]+)[@\s]{2,4}([\d,.]+)[@\s]{2,4}[-\d.,]+[@\s]{2,4}([\d,.]+)[@\s]{2,4}([\d,.]+)[@\s]{2,4}([\d,.]+)[@\s]{2,4}([\d,.-]+)[@\s]{2,4}([\d,.]+)\n/g;
+            const bodyLineRegex = /([\d-]){1,3}[\s@]{2,4}([A-z\s,/()"'.0-9\#\&-]{4,})\n([~-\w\/]+)(([@\s]{2,4})|\n)([\w\s-]+)[@\s]{2,4}([\d,.]+)[@\s]{2,4}[-\d.,]+[@\s]{2,4}([\d,.]+)[@\s]{2,4}([\d,.]+)[@\s]{2,4}([\d,.]+)[@\s]{2,4}([\d,.-]+)[@\s]{2,4}([\d,.]+)\n/g;
             const bodyLines = fileData.match(bodyLineRegex);
             // create body object
             // console.log(bodyLines.length)
@@ -144,7 +144,7 @@ module.exports.pdfToText = async (pdfPath) => {
                 // console.log(firstLine)
                 result['Line'] = firstLine.match(/([\d-]){1,3}/)[0];
                 firstLine = firstLine.replace(/([\d-]){1,3}/,'').trim();
-                result['Description'] = firstLine.match(/([A-z\s,/()"'.0-9\&-]{4,})/)[0].trim();
+                result['Description'] = firstLine.match(/([A-z\s,/()"'.0-9\#\&-]{4,})/)[0].trim();
                 result['Description'] = result['Description'].replace(/--/g,'').trim();
                 // replace "    " with "@@@" to split
                 secondLine = secondLine.replace(/\s{2,4}/g,'@@@');

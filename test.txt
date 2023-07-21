@@ -3,14 +3,14 @@
 
 MATTHEWS MOTOR COMPANY
 Vendor Invoice (Completed)
-Invoice Number:@@@10601 (Completed)@@@Invoice Date:@@@5/2/2023
-Vendor:@@@Blaise Alexander CDJRF (UBLAISE15)@@@RO Number:@@@10229
-6801 Westbranch Hwy.
-Lewisburg, PA 17837@@@Discount %:@@@25.0
-Phone:@@@(570) 523-1256@@@Payment Type:@@@On Account
+Invoice Number:@@@64726 (Completed)@@@Invoice Date:@@@7/21/2023
+Vendor:@@@Alexander Nissan (UALEX002)@@@RO Number:@@@10415
+10 Alexander Dr.
+Muncy, PA 17756@@@Discount %:@@@25.0
+Phone:@@@(570) 546-4925@@@Payment Type:@@@On Account
 Fax:@@@Check/Auth. Number:
-Insurance:@@@NATIONWIDE GENERAL INS.
-Claim Number:@@@231309-GO-1
+Insurance:@@@GEICO CHOICE INSURANCE COMPANY
+Claim Number:@@@0661140120000003-01
 Line   Part Number   Part Type@@@RO List $  RO Sales $  Received
 Qty
 Invoice
@@ -21,21 +21,29 @@ Discount
 %
 Extended
 Cost $
-4@@@Emission label
-68190201@@@OEM@@@1.00@@@1.00@@@1@@@10.95@@@8.21@@@25.0@@@8.21
-14   RT Bracket
-68223470AA@@@OEM@@@65.50@@@65.50@@@1@@@65.50@@@49.13@@@25.0@@@49.13
-46   LT Support bracket
-68223399@@@OEM@@@212.32@@@212.32@@@1@@@276.00@@@133.65@@@51.6@@@133.65
-52   LT Air baffle
-68223548@@@OEM@@@16.25@@@16.25@@@1@@@47.00@@@35.25@@@25.0@@@35.25
-102   High note horn
-68386896AA@@@OEM@@@97.40@@@97.40@@@1@@@97.40@@@73.05@@@25.0@@@73.05
-103   Low note horn
-68386895AA@@@OEM@@@38.70@@@38.70@@@1@@@38.70@@@29.03@@@25.0@@@29.03
-Received Items:@@@6
-Subtotal:@@@328.32
+10   Energy absorber
+85093-3TB1B@@@OEM@@@60.00@@@75.00@@@1@@@102.13@@@76.60@@@25.0@@@76.60
+11   Lower retainer
+62242-3TA0B@@@OEM@@@14.00@@@14.00@@@1@@@15.65@@@11.74@@@25.0@@@11.74
+14   Emblem
+628891JA0A@@@OEM@@@85.87@@@85.87@@@1@@@85.87@@@64.40@@@25.0@@@64.40
+18   Under cover clip #2
+0155309241@@@OEM@@@2.84@@@2.84@@@3@@@2.84@@@2.13@@@25.0@@@6.39
+19   Under cover clip #1
+015532DR9A@@@OEM@@@0.67@@@0.67@@@12@@@0.67@@@0.50@@@25.4@@@6.00
+20   Under cover bolt
+01121N6051@@@OEM@@@1.00@@@1.00@@@5@@@1.00@@@0.75@@@25.0@@@3.75
+21   Under cover nut
+012410009U@@@OEM@@@5.33@@@5.33@@@5@@@5.33@@@4.00@@@25.0@@@20.00
+31   RT Fender liner
+63840-3TA0D@@@LKQ@@@70.00@@@87.50@@@1@@@87.50@@@65.63@@@25.0@@@65.63
+51   LT Reinf bracket
+850933TA0A@@@OEM@@@40.09@@@40.09@@@1@@@33.49@@@25.12@@@25.0@@@25.12
+--   Striker
+84621JA00B@@@OEM@@@36.55@@@--@@@1@@@36.55@@@27.41@@@25.0@@@27.41
+Received Items:@@@31
+Subtotal:@@@307.04
 Tax:@@@0.00
 Freight:@@@0.00
-Grand Total:@@@$328.32
-5/2/2023 12:57:59 PM@@@Page 1
+Grand Total:@@@$307.04
+7/21/2023 8:58:39 AM@@@Page 1
