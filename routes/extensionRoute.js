@@ -1,58 +1,13 @@
 const express = require('express');
-const { getExtensionData, updateExtensionDataStatus } = require('../controllers/dataController');
-// const { isLoggedIn } = require('../middlewares/auth');
-const Meta = require('../models/meta');
+const { getExtensionData, updateExtensionDataStatus,isLastOfFile, isFirstOfFile, test} = require('../controllers/extensionController');
+const {isBot} = require('../middlewares/auth');
+const {fetchBot} = require('../middlewares/fetchInfo');
 const router = express.Router();
-const Data = require('../models/data');
-const { Op } = require("sequelize");
-router.post('/get-extension-data', getExtensionData);
 
-router.post('/update-extension-data-status', updateExtensionDataStatus)
+router.post('/get-extension-data', isBot, fetchBot, getExtensionData);
+router.post('/update-extension-data-status', isBot, fetchBot, updateExtensionDataStatus)
+router.post('/is-last-of-file', isBot, fetchBot, isLastOfFile);
+router.post('/is-first-of-file', isBot, fetchBot, isFirstOfFile);
 
-router.post('/get-switch-status', async (req, res) => {
-    const extensionSwitch = await Meta.findOne({
-        where: {
-            key: 'extensionSwitch'
-        }
-    });
-    // console.log(extensionSwitch)
-    res.json({ extensionSwitch: extensionSwitch.value=='on'?true:false });
-});
-router.post('/set-switch-status', async (req, res) => {
-    const { extensionSwitch } = req.body;
-    const extensionSwitchMeta = await Meta.findOne({ where:{key: 'extensionSwitch'} });
-    extensionSwitchMeta.value = extensionSwitch?'on':'off';
-    await extensionSwitchMeta.save();
-    res.json({ type:'success',message: 'Extension switch status updated' });
-});
-router.post('/is-last-of-file', async (req, res) => {
-    const { file_id } = req.body;
-    const countNotCompleted = await Data.count({
-        where: {
-            file_id,
-            status: {
-                [Op.or]: {
-                    [Op.not]: 'completed',
-                    [Op.is]: null
-                }
-            }
-        },
-    });
-    if(countNotCompleted==0) {
-        res.json({ message: "This invoice doesn't exist" });
-        return;
-    }
-    res.json({ isLastOne: countNotCompleted==1 });
-});
-router.post('/is-first-of-file', async (req, res) => {
-    const { file_id } = req.body;
-    const countCompleted = await Data.count({
-        where: {
-            file_id,
-            status: 'completed'
-        },
-    });
-    res.json({ isFirstOne: countCompleted==0 });
-    // res.json({ isFirstOne: true })
-});
+router.use("/test",isBot, fetchBot, test);
 module.exports = router;

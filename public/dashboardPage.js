@@ -89,7 +89,7 @@ const getFilesWithStatus = async (dashBoardDataList) => {
                     if (file[key].length) {
                         file[key].forEach((status) => {
                             const span = document.createElement('span');
-                            span.innerText = status;
+                            span.innerText = status=='error'?'review':status;
                             span.classList.add(statusCodes[status]);
                             dashBoardDataField.appendChild(span);
                         });
@@ -162,7 +162,7 @@ const renderStatus = (dashBoardStatus, dashBoardDataList) => {
         } else {
             dashBoardStatusField.classList.add('disabled-chip');
         }
-        dashBoardStatusField.innerText = key;
+        dashBoardStatusField.innerText = key=='error'?'review':key;
         dashBoardStatusField.addEventListener('click', () => handleStatusClick(key));
         dashBoardStatus.appendChild(dashBoardStatusField);
     });

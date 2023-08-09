@@ -1,29 +1,26 @@
 const { sequelize } = require("../config/config");
 const { DataTypes } = require("sequelize");
 
-const Meta = sequelize.define(
-    "Meta",
+const Company = sequelize.define(
+    "Company",
     {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
-        key: {
+        name:{
             type: DataTypes.STRING,
             allowNull: false,
         },
-        value: {
+        code:{
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        company_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
+            unique: true
         }
     },
     {
-        tableName: "metas",
+        tableName: "companies",
         timestamps: false,
         createdAt: false,
         updatedAt: false,
@@ -31,5 +28,6 @@ const Meta = sequelize.define(
 
 );
 // sync force
-// Meta.sync({ force: true });
-module.exports = Meta;
+// Company.sync({ force: true });
+
+module.exports = Company;

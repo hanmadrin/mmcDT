@@ -52,7 +52,7 @@
 /* upload file page */
 .upload-pdf-page {
   max-width: 500px;
-  margin: 0 auto;
+  margin: 80px auto;
   padding: 100px 0;
 }
 
@@ -77,6 +77,16 @@
   border-radius: 5px;
   font-size: 16px;
 }
+.upload-pdf-form-input:invalid + .upload-label{
+  border: 1px solid rgba(255, 0, 0, 0.589);
+  box-shadow: inset 0 0 0 1px rgba(255, 0, 0, 0.589);
+  background-color: rgba(255, 0, 0, 0.589);
+}
+.upload-pdf-form-input:valid + .upload-label{
+  border: 1px solid rgba(25, 212, 0, 0.589);
+  box-shadow: inset 0 0 0 1px rgba(25, 212, 0, 0.589);
+  background-color: rgba(25, 212, 0, 0.589);
+}
 
 .upload-pdf-form-button {
   width: 100%;
@@ -90,6 +100,39 @@
   cursor: pointer;
   margin-bottom: 20px;
 }
+.upload-pdf-form-label-input{
+  display: block;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.upload-pdf-form-label-input input{
+  height: 40px;
+  margin-top:5px;
+  font-size: large;
+  padding: 0 15px;
+}
+.upload-pdf-form-label-input input:invalid{
+  border: 1px solid rgba(255, 0, 0, 0.589);
+  outline:rgba(255, 0, 0, 0.589);
+}
+.upload-pdf-form-label-input input:valid{
+  border: 1px solid rgba(25, 212, 0, 0.589);
+  outline:rgba(25, 212, 0, 0.589);
+}
+.upload-pdf-form-submit-button{
+  width: 100%;
+  height: 45px;
+  border: 1px solid var(--dark-bg);
+  padding: 0 15px;
+  font-size: 16px;
+  background: var(--dark-bg);
+  color: #fff;
+  cursor: pointer;
+  margin-top: 50px;
+}
+
 
 .upload-icon {
   height: 32px;
@@ -102,7 +145,7 @@
   justify-content: center;
   /* border: 1px solid #6a6a6a; */
   padding: 8px 15px;
-  box-shadow: inset 0 0 0 1px #30324e;
+  
 }
 
 /* show data page */
@@ -439,8 +482,8 @@ body {
   background-color: var(--dark-bg);
   padding: 0;
   margin: 0;
+  
 }
-
 .font-header {
   color: var(--font-color-header);
   font-size: var(--font-size-header);
@@ -470,12 +513,20 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 60px;
-  background: #181b34;
+  height: 80px;
+  background: #434561;
   display: flex;
   justify-content: right;
   align-items: center;
   padding: 0 20px;
+  /* border-bottom: 1px solid #fff; */
+}
+.menu-bar .company-name-block{
+  font-size: 30px;
+  color: white;
+  position: absolute;
+  left: 100px;
+  top:25px;
 }
 .upload-button{
   /* position: absolute;
@@ -484,10 +535,10 @@ body {
   background: rgba(25, 212, 0, 0.589);
   color: #fff;
   padding: 10px 20px;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   text-decoration: none;
   font-size: 16px;
-  margin-top: 20px;
+  margin-top: 5px;
   margin-left:20px;
   display: inline-block;
   border: none;
@@ -505,10 +556,10 @@ body {
   background: rgba(0, 247, 255, 0.589);
   color: #fff;
   padding: 10px 20px;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   text-decoration: none;
   font-size: 16px;
-  margin-top: 20px;
+  margin-top: 5px;
   margin-left:20px;
   display: inline-block;
   border: none;
@@ -526,10 +577,10 @@ body {
   background: rgba(255, 0, 0, 0.589);
   color: #fff;
   padding: 10px 20px;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   text-decoration: none;
   font-size: 16px;
-  margin-top: 20px;
+  margin-top: 5px;
   margin-left:20px;
   display: inline-block;
   border: none;
@@ -2411,7 +2462,7 @@ body {
 
 /* slider switch css */
 .switch {
-  margin-top:20px;
+  margin-top:5px;
   position: relative;
   display: inline-block;
   width: 60px;

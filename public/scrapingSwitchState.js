@@ -1,5 +1,5 @@
 const getSwitchState = async () => {
-    const response = await fetch('/api/extensions/get-switch-status', {
+    const response = await fetch('/api/datas/get-switch-status', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

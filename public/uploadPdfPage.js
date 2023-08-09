@@ -33,19 +33,108 @@ const uploadPdfPage = () => {
     const uploadPdfForm = document.createElement('form');
     uploadPdfForm.classList.add('upload-pdf-form');
     const uploadPdfFormTitle = document.createElement('h1');
+    
+    
     uploadPdfFormTitle.classList.add('upload-pdf-form-title');
     uploadPdfFormTitle.innerText = 'Upload PDF';
+
+    
+
+
     const uploadPdfFormInput = document.createElement('input');
     uploadPdfFormInput.classList.add('upload-pdf-form-input');
     uploadPdfFormInput.setAttribute('type', 'file');
     uploadPdfFormInput.setAttribute('accept', '.pdf');
     uploadPdfFormInput.setAttribute('id', 'upload');
     uploadPdfFormInput.setAttribute('hidden', 'true');
-    const verifyUploadPdf = async () => {
+    uploadPdfFormInput.setAttribute('required', 'true');
+    
+    const uploadIcon = document.createElement('label');
+    uploadIcon.classList.add('upload-label');
+    uploadIcon.setAttribute('for', 'upload');
+    uploadIcon.innerHTML = `
+        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+                <path d="M512 256l144.8 144.8-36.2 36.2-83-83v311.6h-51.2V354l-83 83-36.2-36.2L512 256zM307.2 716.8V768h409.6v-51.2H307.2z" fill="#000000" fill-rule="evenodd">
+                </path>
+            </g>
+        </svg>
+    `;
+    const svg = uploadIcon.querySelector('svg');
+    svg.classList.add('upload-icon');
+    const uploadText = document.createElement('span');
+    uploadText.innerText = 'Attach PDF';
+    uploadIcon.appendChild(uploadText);
+    // uploadPdfFormInput.addEventListener('change', verifyUploadPdf);
+    uploadPdfForm.appendChild(uploadPdfFormTitle);
+
+
+    const inputs = {
+        "invoiceNumber":{
+            "label":"Invoice Number",
+            "type":"text"
+        },
+        "vendorId":{
+            "label":"Vendor Id",
+            "type":"text"
+        },
+        "dmsRoNumber":{
+            "label":"DMS RO Number",
+            "type":"text"
+        }
+    }
+    for(let input in inputs){
+        const label = document.createElement('label');
+        label.innerText = inputs[input].label;
+        label.classList = 'upload-pdf-form-label-input'
+        const inputElement = document.createElement('input');
+        inputElement.setAttribute('type', inputs[input].type);
+        inputElement.setAttribute('name', input);
+        inputElement.setAttribute('id', input);
+        inputElement.setAttribute('required', 'true');
+        label.appendChild(inputElement);
+        uploadPdfForm.appendChild(label);
+        const inputVerify = async (e) => {
+            // no _ allowed
+            const value = e.target.value;
+            if(value.includes('_')){
+                notify({ data: 'Invalid character: _', type: 'danger' });
+                e.target.value = e.target.value.replace(/_/g, '');
+                return;
+            }
+
+        }
+        inputElement.addEventListener('input', inputVerify);
+        inputElement.addEventListener('change', inputVerify);
+        inputElement.addEventListener('paste', inputVerify);
+        inputElement.addEventListener('keyup', inputVerify);
+        inputElement.addEventListener('keydown', inputVerify);
+        inputElement.addEventListener('keypress', inputVerify);
+        inputElement.addEventListener('focus', inputVerify);
+        inputElement.addEventListener('blur', inputVerify);
+    }
+
+    uploadPdfForm.appendChild(uploadPdfFormInput);
+    uploadPdfForm.appendChild(uploadIcon);
+    const verifyUploadPdf = async (e) => {
+        e.preventDefault();
         const formData = new FormData();
-        formData.append('pdf', uploadPdfFormInput.files[0]);
-        // name format verification
-        // 8000000_UGR0981.pdf
+        const fileNames = [];
+        for(let input in inputs){
+            const value = document.querySelector(`#${input}`).value;
+            if(!value){
+                notify({ data: 'Please fill all the fields', type: 'danger' });
+                return;
+            }
+            fileNames.push(value);
+        }
+        const fileName = fileNames.join('_');
+        if(uploadPdfFormInput.files.length == 0){
+            notify({ data: 'PDF File is required', type: 'danger' });
+            return;
+        }
         let name = uploadPdfFormInput.files[0].name;
         if (!name) {
             notify({ data: 'Select a file', type: 'danger' });
@@ -55,8 +144,16 @@ const uploadPdfPage = () => {
             notify({ data: 'Invalid file type.', type: 'danger' });
             return;
         }
-        name = name.replace('.pdf', '');
-        const nameArray = name.split('_');
+        formData.append('pdf', uploadPdfFormInput.files[0], `${fileName}.pdf`);
+        // change form file name
+
+        
+        // name format verification
+        // 8000000_UGR0981.pdf
+        
+        
+        
+        const nameArray = fileName.split('_');
         if (nameArray.length != 3) {
             notify({ data: 'Invalid file name. There will be 3 data section', type: 'danger' });
             return;
@@ -85,7 +182,7 @@ const uploadPdfPage = () => {
                     backDropColor: 'rgba(0, 0, 0, 0)',
                 }
             });
-            const responseData = await fetch(`/api/datas/is-pdf-exists/${uploadPdfFormInput.files[0].name}`, {
+            const responseData = await fetch(`/api/datas/is-pdf-exists/${fileName}.pdf`, {
                 method: 'GET',
             });
             const jsonData = await responseData.json();
@@ -194,28 +291,13 @@ const uploadPdfPage = () => {
             notify({ data: error, type: 'danger' });
         }
     };
-    const uploadIcon = document.createElement('label');
-    uploadIcon.classList.add('upload-label');
-    uploadIcon.setAttribute('for', 'upload');
-    uploadIcon.innerHTML = `
-        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000">
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-            <g id="SVGRepo_iconCarrier">
-                <path d="M512 256l144.8 144.8-36.2 36.2-83-83v311.6h-51.2V354l-83 83-36.2-36.2L512 256zM307.2 716.8V768h409.6v-51.2H307.2z" fill="#000000" fill-rule="evenodd">
-                </path>
-            </g>
-        </svg>
-    `;
-    const svg = uploadIcon.querySelector('svg');
-    svg.classList.add('upload-icon');
-    const uploadText = document.createElement('span');
-    uploadText.innerText = 'Upload PDF';
-    uploadIcon.appendChild(uploadText);
-    uploadPdfFormInput.addEventListener('change', verifyUploadPdf);
-    uploadPdfForm.appendChild(uploadPdfFormTitle);
-    uploadPdfForm.appendChild(uploadPdfFormInput);
-    uploadPdfForm.appendChild(uploadIcon);
+    const submitButton = document.createElement('input');
+    submitButton.setAttribute('type', 'submit');
+    submitButton.setAttribute('value', 'Upload');
+    submitButton.classList.add('upload-pdf-form-submit-button');
+    uploadPdfForm.appendChild(submitButton);
+    submitButton.addEventListener('click', verifyUploadPdf);
+
     uploadPdfPage.appendChild(uploadPdfForm);
     // uploadPdfPage.appendChild(logoutButton);
     // uploadPdfPage.appendChild(dashboardButton);

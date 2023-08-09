@@ -1,6 +1,7 @@
 import uploadPdfPage from './uploadPdfPage.js';
 import { notify, popup, loaderCircle } from './library.js';
 const loginPage = () => {
+    localStorage.setItem('companyName', '');
     const body = document.querySelector('#main');
     const loginPage = document.createElement('div');
     loginPage.classList.add('login-page');
@@ -48,6 +49,8 @@ const loginPage = () => {
                 notify({ data, type: 'danger' });
                 return;
             }
+            console.log(data)
+            localStorage.setItem('companyName', data.Company.name);
             window.history.pushState({}, '', `/upload`);
             body.removeChild(loginPage);
             uploadPdfPage();

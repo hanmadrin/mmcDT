@@ -21,6 +21,10 @@ const User = sequelize.define(
             type: DataTypes.ENUM,
             values: ['active', 'inactive'],
             defaultValue: 'active'
+        },
+        company_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
         }
     },
     {

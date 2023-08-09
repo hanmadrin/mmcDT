@@ -70,7 +70,7 @@ const renderTableRows = (data) => {
                     let isChanged = false;
                     for (const key in status) {
                         const option = document.createElement('option');
-                        option.innerText = key;
+                        option.innerText = key=='error'?'review':key;
                         option.value = key;
                         select.appendChild(option);
                         if (status[key] === data.response.body[index].status) {

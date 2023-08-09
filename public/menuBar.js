@@ -4,6 +4,10 @@ import  dashBoardPage  from './dashboardPage.js';
 import { notify,loaderCircle,sleep } from './library.js';
 import scrapingSwitchStatus from './scrapingSwitchState.js';
 const menuBar = () => {
+    const companyNameBlock = document.createElement('div');
+    companyNameBlock.classList.add('company-name-block');
+    companyNameBlock.innerText = localStorage.getItem('companyName');
+
     const menuBarHolder = document.createElement('div');
     menuBarHolder.classList.add('menu-bar');
     const logoutButton = document.createElement('button');
@@ -44,7 +48,7 @@ const menuBar = () => {
     sliderInput.disabled = true;
     sliderInput.addEventListener('change', async() => {
         const extensionSwitch = sliderInput.checked;
-        const response = await fetch('/api/extensions/set-switch-status', {
+        const response = await fetch('/api/datas/set-switch-status', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -52,6 +56,7 @@ const menuBar = () => {
             body: JSON.stringify({ extensionSwitch })
         });
         const data = await response.json();
+        console.log(data.extensionToken)
         notify({ data: data.message, type: 'success' });
     });
     const sliderSpan = document.createElement('span');
@@ -71,7 +76,7 @@ const menuBar = () => {
     })();
 
 
-    menuBarHolder.append(sliderLabel,uploadButton, dashboardButton, logoutButton);
+    menuBarHolder.append(companyNameBlock, sliderLabel,uploadButton, dashboardButton, logoutButton);
 
 
     
