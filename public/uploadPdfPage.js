@@ -72,18 +72,18 @@ const uploadPdfPage = () => {
 
 
     const inputs = {
-        "invoiceNumber":{
-            "label":"Invoice Number",
+        "dmsRoNumber":{
+            "label":"DMS RO Number",
             "type":"text"
         },
         "vendorId":{
             "label":"Vendor Id",
             "type":"text"
         },
-        "dmsRoNumber":{
-            "label":"DMS RO Number",
+        "invoiceNumber":{
+            "label":"Invoice Number",
             "type":"text"
-        }
+        },
     }
     for(let input in inputs){
         const label = document.createElement('label');
@@ -155,12 +155,12 @@ const uploadPdfPage = () => {
         
         const nameArray = fileName.split('_');
         if (nameArray.length != 3) {
-            notify({ data: 'Invalid file name. There will be 3 data section', type: 'danger' });
+            notify({ data: 'Invalid Character "_" in the input fields', type: 'danger' });
             return;
         }
         const nameArray1 = nameArray[0].split('');
         if (nameArray1.length != 7) {
-            notify({ data: 'Invalid file name', type: 'danger' });
+            notify({ data: 'Invoice Number should be 7 Digit', type: 'danger' });
             return;
         }
         // allowed characters A-Z,0-9. verify with regex by replacing
