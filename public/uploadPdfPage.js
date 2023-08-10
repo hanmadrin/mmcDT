@@ -160,7 +160,7 @@ const uploadPdfPage = () => {
         }
         const nameArray1 = nameArray[0].split('');
         if (nameArray1.length != 7) {
-            notify({ data: 'Invoice Number should be 7 Digit', type: 'danger' });
+            notify({ data: 'DMS RO should be 7 Digit', type: 'danger' });
             return;
         }
         // allowed characters A-Z,0-9. verify with regex by replacing
