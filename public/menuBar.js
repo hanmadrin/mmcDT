@@ -6,7 +6,20 @@ import scrapingSwitchStatus from './scrapingSwitchState.js';
 const menuBar = () => {
     const companyNameBlock = document.createElement('div');
     companyNameBlock.classList.add('company-name-block');
-    companyNameBlock.innerText = localStorage.getItem('companyName');
+    // companyNameBlock.innerText = localStorage.getItem('companyName');
+    companyNameBlock.addEventListener('click', () => {
+        // body.removeChild(editDataPage);
+        window.history.pushState({}, '', `/dashboard`);
+        dashBoardPage();
+    });
+    // background image
+    const logo = document.createElement('img');
+    logo.src = '/public/logo.png';
+    logo.classList = 'logo';
+    const text = document.createElement('span');
+    text.innerText = localStorage.getItem('companyName');
+    text.classList = 'name';
+    companyNameBlock.append(logo, text);
 
     const menuBarHolder = document.createElement('div');
     menuBarHolder.classList.add('menu-bar');
