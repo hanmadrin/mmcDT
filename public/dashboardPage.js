@@ -13,6 +13,7 @@ const fileFields = {
 
 const statusCodes = {
     completed: 'success-chip',
+    fixed: 'success-chip',
     error: 'error-chip',
     processing: 'processing-chip',
     inQueue: 'in-queue-chip',

@@ -12,7 +12,8 @@ const state = {
 const status = {
     error: 'error',
     completed: 'completed',
-    inQueue: null
+    inQueue: null,
+    fixed: 'fixed',
 };
 
 const renderHeader = (data) => {

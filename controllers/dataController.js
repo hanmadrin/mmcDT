@@ -141,6 +141,12 @@ module.exports.getFilesWithStatus = async (req, res, next) => {
                 [Op.eq]: 'completed'
             }
         }
+    }else if (status === 'fixed') {
+        dataConditions = {
+            status: {
+                [Op.eq]: 'fixed'
+            }
+        }
     } else if (status === 'error') {
         dataConditions = {
             status: {
@@ -157,7 +163,7 @@ module.exports.getFilesWithStatus = async (req, res, next) => {
         dataConditions = {
             status: {
                 [Op.and]: {
-                    [Op.notIn]: ['completed', 'error', 'fileError'],
+                    [Op.notIn]: ['completed', 'error', 'fileError','fixed'],
                     [Op.not]: null
                 }
             }
@@ -259,11 +265,15 @@ module.exports.getFilesWithStatus = async (req, res, next) => {
             if (completedStatus) {
                 status.push('completed');
             }
+            const fixedStatus = Data.find(data => data.status === 'fixed');
+            if (fixedStatus) {
+                status.push('fixed');
+            }
             const inQueueStatus = Data.find(data => data.status === null);
             if (inQueueStatus) {
                 status.push('inQueue');
             }
-            const processingStatus = Data.find(data => data.status !== 'completed' && data.status !== 'error' && data.status !== 'fileError' && data.status !== null);
+            const processingStatus = Data.find(data => data.status !== 'completed' && data.status !== 'fixed' && data.status !== 'error' && data.status !== 'fileError' && data.status !== null);
             if (processingStatus) {
                 status.push('processing');
             }
