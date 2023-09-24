@@ -33,7 +33,7 @@ app.use((err, req, res, next) => {
     res.status(statusCode).json(message);
 });
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0",() => {
     console.log(`server running at http://localhost:${port}`)
 });
 

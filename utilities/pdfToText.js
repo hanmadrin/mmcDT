@@ -49,7 +49,7 @@ module.exports.pdfToText = async (pdfPath) => {
         //     if (err) throw err;
         //     console.log('The file has been saved!');
         // });
-        fileData = fileData.replace(/(\d{1,2}\/\d{1,2}\/\d{4}\s\d{1,2}:\d{1,2}:\d{1,2}\s[A|P]M)@@@Page\s\d{1,2}\n\n\n\n/g,'');
+        fileData = fileData.replace(/\n(\d{1,2}\/\d{1,2}\/\d{4}\s\d{1,2}:\d{1,2}:\d{1,2}\s[A|P]M)@@@Page\s\d{1,2}\n{3,4}MATTHEWS MOTOR COMPANY/g,'');
         // fs.writeFileSync('test.txt', fileData);
         const header = (() => {
             const headerContentStructure = [
