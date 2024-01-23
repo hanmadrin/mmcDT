@@ -3,15 +3,14 @@
 
 MATTHEWS MOTOR COMPANY
 Vendor Invoice (Completed)
-Invoice Number:@@@123738 (Completed)@@@Invoice Date:@@@9/6/2023
-Vendor:@@@Aubrey Alexander Toyota Selinsgrove (UAUR001)@@@RO Number:@@@10497
-1324 North Susquehanna Trail
-Selinsgrove, PA 17870@@@Discount %:@@@25.0
-Phone:@@@(570) 743-1171@@@Payment Type:@@@On Account
+Invoice Number:@@@146392 (Completed)@@@Invoice Date:@@@1/23/2024
+Vendor:@@@Simmons Rockwell Ford (USIMM003)@@@RO Number:@@@10697
+7329 Old Hammondsport Rd
+Bath, NY 14810@@@Discount %:@@@25.0
+Phone:@@@(607) 776-7600@@@Payment Type:@@@On Account
 Fax:@@@Check/Auth. Number:
-Insurance:@@@ALLSTATE FIRE AND CASUALTY INSURANCE
-COMPANY
-Claim Number:@@@000725900716H02
+Insurance:@@@PROGRESSIVE
+Claim Number:@@@23-8609089-01
 Line   Part Number   Part Type@@@RO List $  RO Sales $  Received
 Qty
 Invoice
@@ -22,15 +21,19 @@ Discount
 %
 Extended
 Cost $
-7@@@Pad
-5242102050@@@OEM@@@8.22@@@8.22@@@1@@@8.22@@@5.59@@@32.0@@@5.59
-8@@@Trim molding Japan built
-5212812920@@@OEM@@@13.07@@@13.07@@@1@@@13.07@@@8.89@@@32.0@@@8.89
-15   LT Headlamp assy w/o accent lighting all
-8115012N20@@@OEM@@@897.70@@@897.70@@@1@@@1,176.31@@@799.89@@@32.0@@@799.89
-Received Items:@@@3
-Subtotal:@@@814.37
+3@@@Bumper cover w/park sensor, w/tow hook w/o auto park
+FB5Z17D957DAPT
+M
+OEM@@@844.00@@@844.00@@@1@@@964.73@@@580.95@@@39.8@@@580.95
+11   Lower cover
+FB5Z 17D957AC   Aftermarket@@@287.00@@@287.00@@@1@@@318.79@@@200.25@@@37.2@@@200.25
+24   Radiator support (RIM)
+FB5Z16138A@@@OEM@@@352.50@@@352.50@@@1@@@449.15@@@225.25@@@49.8@@@225.25
+44   LT fender assy
+FB5Z16006A@@@OEM@@@381.25@@@381.25@@@1@@@445.93@@@260.25@@@41.6@@@260.25
+Received Items:@@@4
+Subtotal:@@@1,266.70
 Tax:@@@0.00
 Freight:@@@0.00
-Grand Total:@@@$814.37
-9/6/2023 2:52:48 PM@@@Page 1
+Grand Total:@@@$1,266.70
+1/23/2024 11:58:22 AM@@@Page 1
