@@ -3,14 +3,14 @@
 
 MATTHEWS MOTOR COMPANY
 Vendor Invoice (Completed)
-Invoice Number:@@@146392 (Completed)@@@Invoice Date:@@@1/23/2024
-Vendor:@@@Simmons Rockwell Ford (USIMM003)@@@RO Number:@@@10697
-7329 Old Hammondsport Rd
-Bath, NY 14810@@@Discount %:@@@25.0
-Phone:@@@(607) 776-7600@@@Payment Type:@@@On Account
+Invoice Number:@@@16923 (Completed)@@@Invoice Date:@@@1/31/2024
+Vendor:@@@Blaise Alexander CDJR FIAT of Lewisburg@@@RO Number:@@@10716
+6801 Westbranch Hwy.
+Lewisburg, PA 17837@@@Discount %:@@@25.0
+Phone:@@@(888) 812-4723@@@Payment Type:@@@On Account
 Fax:@@@Check/Auth. Number:
 Insurance:@@@PROGRESSIVE
-Claim Number:@@@23-8609089-01
+Claim Number:@@@23-3648475-01
 Line   Part Number   Part Type@@@RO List $  RO Sales $  Received
 Qty
 Invoice
@@ -21,19 +21,23 @@ Discount
 %
 Extended
 Cost $
-3@@@Bumper cover w/park sensor, w/tow hook w/o auto park
-FB5Z17D957DAPT
-M
-OEM@@@844.00@@@844.00@@@1@@@964.73@@@580.95@@@39.8@@@580.95
-11   Lower cover
-FB5Z 17D957AC   Aftermarket@@@287.00@@@287.00@@@1@@@318.79@@@200.25@@@37.2@@@200.25
-24   Radiator support (RIM)
-FB5Z16138A@@@OEM@@@352.50@@@352.50@@@1@@@449.15@@@225.25@@@49.8@@@225.25
-44   LT fender assy
-FB5Z16006A@@@OEM@@@381.25@@@381.25@@@1@@@445.93@@@260.25@@@41.6@@@260.25
-Received Items:@@@4
-Subtotal:@@@1,266.70
+3@@@Air bag label glove box
+682243738AC@@@OEM@@@3.35@@@3.35@@@1@@@3.00@@@2.25@@@25.0@@@2.25
+32   RT Side shield 3.2 liter
+68207946AA@@@OEM@@@38.45@@@38.45@@@1@@@48.50@@@36.38@@@25.0@@@36.38
+33   LT Side shield 3.2 liter
+[68207947AA]@@@OEM@@@44.20@@@44.20@@@1@@@44.20@@@33.15@@@25.0@@@33.15
+40   LT Fender liner w/o black flares
+68209679AE@@@OEM@@@66.15@@@66.15@@@1@@@131.00@@@51.23@@@60.9@@@51.23
+41   RT Flare w/o active drive 2 textured
+68210314AE@@@OEM@@@132.31@@@132.31@@@1@@@214.00@@@103.68@@@51.6@@@103.68
+42   LT Flare w/o active drive 2 textured
+68210315AE@@@OEM@@@132.31@@@132.31@@@1@@@219.00@@@106.11@@@51.5@@@106.11
+53   L Frt Body Headlamp Mtg Brkt
+68227483AA@@@OEM@@@68.00@@@68.00@@@1@@@94.10@@@45.72@@@51.4@@@45.72
+Received Items:@@@7
+Subtotal:@@@378.52
 Tax:@@@0.00
 Freight:@@@0.00
-Grand Total:@@@$1,266.70
-1/23/2024 11:58:22 AM@@@Page 1
+Grand Total:@@@$378.52
+2/6/2024 11:04:50 AM@@@Page 1
