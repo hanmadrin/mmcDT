@@ -144,7 +144,7 @@ module.exports.pdfToText = async (pdfPath) => {
                 // console.log(firstLine)
                 result['Line'] = firstLine.match(/([\d-]){1,3}/)[0];
                 firstLine = firstLine.replace(/([\d-]){1,3}/,'').trim();
-                result['Description'] = firstLine.match(/([A-z\s,/()"';.0-9\#\&-]{3,})/)[0].trim();
+                result['Description'] = firstLine.match(/([A-z\s\+\-,/()"';.0-9\#\&-]{3,})/)[0].trim();
                 result['Description'] = result['Description'].replace(/--/g,'').trim();
                 // replace "    " with "@@@" to split
                 secondLine = secondLine.replace(/\s{2,4}/g,'@@@');
