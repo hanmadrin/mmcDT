@@ -3,14 +3,14 @@
 
 MATTHEWS MOTOR COMPANY
 Vendor Invoice (Completed)
-Invoice Number:@@@16923 (Completed)@@@Invoice Date:@@@1/31/2024
-Vendor:@@@Blaise Alexander CDJR FIAT of Lewisburg@@@RO Number:@@@10716
-6801 Westbranch Hwy.
-Lewisburg, PA 17837@@@Discount %:@@@25.0
-Phone:@@@(888) 812-4723@@@Payment Type:@@@On Account
+Invoice Number:@@@131561 (Completed)@@@Invoice Date:@@@3/6/2024
+Vendor:@@@Aubrey Alexander Toyota Selinsgrove (UAUR001)@@@RO Number:@@@10772
+1324 North Susquehanna Trail
+Selinsgrove, PA 17870@@@Discount %:@@@25.0
+Phone:@@@(570) 743-1171@@@Payment Type:@@@On Account
 Fax:@@@Check/Auth. Number:
-Insurance:@@@PROGRESSIVE
-Claim Number:@@@23-3648475-01
+Insurance:@@@ERIE INSURANCE GROUP
+Claim Number:@@@A00005692938-1
 Line   Part Number   Part Type@@@RO List $  RO Sales $  Received
 Qty
 Invoice
@@ -21,23 +21,37 @@ Discount
 %
 Extended
 Cost $
-3@@@Air bag label glove box
-682243738AC@@@OEM@@@3.35@@@3.35@@@1@@@3.00@@@2.25@@@25.0@@@2.25
-32   RT Side shield 3.2 liter
-68207946AA@@@OEM@@@38.45@@@38.45@@@1@@@48.50@@@36.38@@@25.0@@@36.38
-33   LT Side shield 3.2 liter
-[68207947AA]@@@OEM@@@44.20@@@44.20@@@1@@@44.20@@@33.15@@@25.0@@@33.15
-40   LT Fender liner w/o black flares
-68209679AE@@@OEM@@@66.15@@@66.15@@@1@@@131.00@@@51.23@@@60.9@@@51.23
-41   RT Flare w/o active drive 2 textured
-68210314AE@@@OEM@@@132.31@@@132.31@@@1@@@214.00@@@103.68@@@51.6@@@103.68
-42   LT Flare w/o active drive 2 textured
-68210315AE@@@OEM@@@132.31@@@132.31@@@1@@@219.00@@@106.11@@@51.5@@@106.11
-53   L Frt Body Headlamp Mtg Brkt
-68227483AA@@@OEM@@@68.00@@@68.00@@@1@@@94.10@@@45.72@@@51.4@@@45.72
-Received Items:@@@7
-Subtotal:@@@378.52
+20   LT Headlamp assy LE, XLE
+8115008100@@@OEM@@@1,246.84@@@1,246.84@@@1@@@1,246.84@@@847.85@@@32.0@@@847.85
+28   LT Fender (ALU)
+5381208050@@@OEM@@@292.29@@@292.29@@@1@@@292.29@@@198.76@@@32.0@@@198.76
+35   RT Washer nozzle +/- 0 degrees
+853810T010@@@OEM@@@27.18@@@27.18@@@1@@@27.18@@@18.48@@@32.0@@@18.48
+36   LT Washer nozzle +/- 0 degrees
+853810T010@@@OEM@@@27.18@@@27.18@@@1@@@27.18@@@18.48@@@32.0@@@18.48
+43   LT Door shell
+6700208080@@@OEM@@@900.70@@@900.70@@@1@@@900.70@@@612.48@@@32.0@@@612.48
+46   LT Black out tape front
+7592208030@@@OEM@@@13.42@@@13.42@@@1@@@13.42@@@9.13@@@32.0@@@9.13
+47   LT Black out tape upper
+7593908020@@@OEM@@@33.42@@@33.42@@@1@@@33.42@@@22.73@@@32.0@@@22.73
+48   LT Black out tape rear
+7596908020@@@OEM@@@20.08@@@20.08@@@1@@@20.08@@@13.65@@@32.0@@@13.65
+49   LT Applique
+7575608020@@@OEM@@@40.89@@@40.89@@@1@@@40.89@@@27.81@@@32.0@@@27.81
+50   LT Belt molding
+6821008030@@@OEM@@@46.57@@@46.57@@@1@@@46.57@@@31.67@@@32.0@@@31.67
+51   LT Corner trim
+6766408020@@@OEM@@@8.71@@@8.71@@@1@@@8.71@@@5.92@@@32.0@@@5.92
+52   LT Nameplate "HYBRID"
+754450R010@@@OEM@@@34.48@@@34.48@@@1@@@34.48@@@23.45@@@32.0@@@23.45
+60   LT Belt molding
+6823008030@@@OEM@@@53.05@@@53.05@@@1@@@53.05@@@36.07@@@32.0@@@36.07
+63   LT Door shell protector
+5874308020@@@OEM@@@17.53@@@17.53@@@1@@@17.53@@@11.92@@@32.0@@@11.92
+Received Items:@@@14
+Subtotal:@@@1,878.40
 Tax:@@@0.00
 Freight:@@@0.00
-Grand Total:@@@$378.52
-2/6/2024 11:04:50 AM@@@Page 1
+Grand Total:@@@$1,878.40
+3/11/2024 12:05:59 PM@@@Page 1
