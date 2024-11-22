@@ -3,14 +3,14 @@
 
 MATTHEWS MOTOR COMPANY
 Vendor Invoice (Completed)
-Invoice Number:@@@21501 (Completed)@@@Invoice Date:@@@8/13/2024
-Vendor:@@@Blaise Alexander CDJR FIAT of Lewisburg@@@RO Number:@@@10980
-6801 Westbranch Hwy.
-Lewisburg, PA 17837@@@Discount %:@@@25.0
-Phone:@@@(888) 812-4723@@@Payment Type:@@@On Account
+Invoice Number:@@@76899 (Completed)@@@Invoice Date:@@@11/20/2024
+Vendor:@@@Ciocca Honda (UCIOH001)@@@RO Number:@@@11217
+1301 Lycoming Mall Drive
+Muncy, PA 17756@@@Discount %:@@@25.0
+Phone:@@@(570) 326-2858@@@Payment Type:@@@On Account
 Fax:@@@Check/Auth. Number:
 Insurance:@@@ERIE INSURANCE GROUP
-Claim Number:@@@A00006005525-1
+Claim Number:@@@A00006363275-1
 Line   Part Number   Part Type@@@RO List $  RO Sales $  Received
 Qty
 Invoice
@@ -21,25 +21,17 @@ Discount
 %
 Extended
 Cost $
-22   Distance sensor bracket long range
-68408125AA@@@OEM@@@21.70@@@21.70@@@1@@@21.70@@@16.28@@@25.0@@@16.28
-23   Distance sensor long range
-68440586ak@@@OEM@@@372.00@@@372.00@@@1@@@372.00@@@279.00@@@25.0@@@279.00
-25   Upper grille
-68507747AB@@@OEM@@@97.75@@@97.75@@@1@@@97.75@@@73.31@@@25.0@@@73.31
-26   Temp sensor
-68518243AA@@@OEM@@@34.70@@@34.70@@@1@@@34.70@@@26.03@@@25.0@@@26.03
-27   RT Outer grille w/o fog lamps
-68408098AC@@@OEM@@@32.00@@@32.00@@@1@@@32.00@@@24.00@@@25.0@@@24.00
-37   Radiator support
-68377400AD@@@OEM@@@774.00@@@774.00@@@1@@@774.00@@@580.50@@@25.0@@@580.50
-65   High note horn
-68421142AA@@@OEM@@@62.85@@@62.85@@@1@@@62.85@@@47.14@@@25.0@@@47.14
---   Lower grille code: mag w/o ft park sensor
-7CW07GXHAB@@@OEM@@@57.65@@@--@@@1@@@57.65@@@43.24@@@25.0@@@43.24
-Received Items:@@@8
-Subtotal:@@@1,089.50
+17   Bumper cover
+04711TG7A0ZZ   Opt OEM@@@316.92@@@316.92@@@1@@@316.92@@@233.27@@@26.4@@@233.27
+22   RT Filler molding
+71103TG7A50@@@Opt OEM@@@39.43@@@39.43@@@1@@@39.43@@@29.57@@@25.0@@@29.57
+23   Lower cover
+71110TG7A50@@@Opt OEM@@@230.77@@@230.77@@@1@@@230.77@@@169.33@@@26.6@@@169.33
+38   RT Wheel flare
+74115TGA00@@@OEM, Partial@@@56.92@@@56.92@@@1@@@56.92@@@43.27@@@24.0@@@43.27
+Received Items:@@@4
+Subtotal:@@@475.44
 Tax:@@@0.00
 Freight:@@@0.00
-Grand Total:@@@$1,089.50
-8/16/2024 11:55:34 AM@@@Page 1
+Grand Total:@@@$475.44
+11/20/2024 2:45:38 PM@@@Page 1
