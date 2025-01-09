@@ -3,14 +3,13 @@
 
 MATTHEWS MOTOR COMPANY
 Vendor Invoice (Completed)
-Invoice Number:@@@76899 (Completed)@@@Invoice Date:@@@11/20/2024
-Vendor:@@@Ciocca Honda (UCIOH001)@@@RO Number:@@@11217
-1301 Lycoming Mall Drive
-Muncy, PA 17756@@@Discount %:@@@25.0
-Phone:@@@(570) 326-2858@@@Payment Type:@@@On Account
+Invoice Number:@@@150571 (Completed)@@@Invoice Date:@@@1/6/2025
+Vendor:@@@Simmons Rockwell Ford (USIMM003)@@@RO Number:@@@11194
+7329 Old Hammondsport Rd
+Bath, NY 14810@@@Discount %:@@@25.0
+Phone:@@@(607) 776-7600@@@Payment Type:@@@On Account
 Fax:@@@Check/Auth. Number:
-Insurance:@@@ERIE INSURANCE GROUP
-Claim Number:@@@A00006363275-1
+Insurance:@@@SENECA RESOURCES
 Line   Part Number   Part Type@@@RO List $  RO Sales $  Received
 Qty
 Invoice
@@ -21,17 +20,29 @@ Discount
 %
 Extended
 Cost $
-17   Bumper cover
-04711TG7A0ZZ   Opt OEM@@@316.92@@@316.92@@@1@@@316.92@@@233.27@@@26.4@@@233.27
-22   RT Filler molding
-71103TG7A50@@@Opt OEM@@@39.43@@@39.43@@@1@@@39.43@@@29.57@@@25.0@@@29.57
-23   Lower cover
-71110TG7A50@@@Opt OEM@@@230.77@@@230.77@@@1@@@230.77@@@169.33@@@26.6@@@169.33
-38   RT Wheel flare
-74115TGA00@@@OEM, Partial@@@56.92@@@56.92@@@1@@@56.92@@@43.27@@@24.0@@@43.27
-Received Items:@@@4
-Subtotal:@@@475.44
+4@@@Lower molding black
+ML3Z8419AB@@@Opt OEM@@@145.00@@@145.00@@@1@@@145.00@@@105.95@@@26.9@@@105.95
+5@@@LT Reinforcement
+ML3Z17C947E@@@OEM@@@27.63@@@27.63@@@1@@@27.63@@@20.65@@@25.3@@@20.65
+8@@@Emblem w/o front camera
+JL3Z8213A@@@OEM@@@111.28@@@111.28@@@1@@@111.28@@@72.21@@@35.1@@@72.21
+10   LT Headlamp assy
+ML3Z13008K@@@Opt OEM@@@721.33@@@721.33@@@1@@@721.33@@@541.00@@@25.0@@@541.00
+13   Shutter upper
+ML3Z8475D@@@OEM@@@634.93@@@634.93@@@1@@@634.93@@@472.86@@@25.5@@@472.86
+48   RT Rear deflector
+ML3Z99292A22AD OEM@@@28.95@@@28.95@@@1@@@28.95@@@22.29@@@23.0@@@22.29
+51   Mud guard factory
+ML3Z16A550BA   OEM@@@60.00@@@60.00@@@1@@@60.00@@@45.00@@@25.0@@@45.00
+59   Step pad w/park sensors w/o trailer towing
+ML3Z17B807DB   Aftermarket@@@113.00@@@113.00@@@1@@@113.00@@@80.25@@@29.0@@@80.25
+60   RT Mount bracket
+ML3Z17787A@@@OEM@@@75.30@@@75.30@@@1@@@75.30@@@53.06@@@29.5@@@53.06
+61   Bumper w/park snsor, w/o park asst, w/o TREMOR chrome
+ML3Z17906DA@@@Opt OEM@@@676.00@@@676.00@@@1@@@676.00@@@500.25@@@26.0@@@500.25
+Received Items:@@@10
+Subtotal:@@@1,913.52
 Tax:@@@0.00
 Freight:@@@0.00
-Grand Total:@@@$475.44
-11/20/2024 2:45:38 PM@@@Page 1
+Grand Total:@@@$1,913.52
+1/7/2025 8:36:50 AM@@@Page 1
