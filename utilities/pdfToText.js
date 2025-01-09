@@ -148,7 +148,19 @@ module.exports.pdfToText = async (pdfPath) => {
                 result['Description'] = result['Description'].replace(/--/g,'').trim();
                 // replace "    " with "@@@" to split
                 secondLine = secondLine.replace(/\s{2,4}/g,'@@@');
+                // secondLine = secondLine.replace(/(?<!@@@)\s(?!@@@)/g, '@@@');
+                // positon of " "
+                const positonOfSpace = secondLine.indexOf(' ');
+                const positionOfAt = secondLine.indexOf('@@@');
+                if(positonOfSpace<positionOfAt){
+                    secondLine = secondLine.replace(/\s{1,4}/g,'@@@');
+                }
+                
+                console.log(secondLine)
+
                 const metas = secondLine.split('@@@');
+                console.log(metas)
+                console.log(metas['4'])
                 result['Part Number'] = metas[0];
                 result['Part Type'] = metas[1];
                 result['RO List $'] = metas[2];
